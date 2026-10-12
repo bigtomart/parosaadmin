@@ -9,6 +9,22 @@
   <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&family=Playfair+Display:ital,wght@0,600;0,700;1,600&display=swap" rel="stylesheet">
   <script src="https://cdn.tailwindcss.com"></script>
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-auth-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore-compat.js"></script>
+  <script>
+    const firebaseConfig = {
+      apiKey: "AIzaSy_PAROSA_DEMO_KEY",
+      authDomain: "parosa-ec4f2.firebaseapp.com",
+      projectId: "parosa-ec4f2",
+      storageBucket: "parosa-ec4f2.firebasestorage.app",
+      messagingSenderId: "1072941834832",
+      appId: "1:1072941834832:web:parosa_admin_client"
+    };
+    if (typeof firebase !== 'undefined') {
+      try { firebase.initializeApp(firebaseConfig); } catch (_) {}
+    }
+  </script>
   <style>
     body { font-family: 'Outfit', sans-serif; }
     .font-serif { font-family: 'Playfair Display', serif; }
