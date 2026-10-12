@@ -59,11 +59,11 @@
           <div class="relative">
             <span class="absolute left-3.5 top-3 text-slate-400 text-sm">👤</span>
             <input 
-              type="text" 
+              type="email" 
               id="input-login-email" 
-              value="pawan@alwar.inn" 
-              placeholder="e.g. pawan@alwar.inn" 
+              placeholder="Enter Admin Email (e.g. pawan@alwar.inn)" 
               required
+              autocomplete="username"
               class="w-full pl-10 pr-4 py-2.5 bg-slate-950/80 border border-slate-700 rounded-xl text-sm text-white placeholder-slate-500 focus:outline-none focus:border-amber-400 focus:ring-1 focus:ring-amber-400 transition-all font-mono"
             >
           </div>
@@ -78,9 +78,9 @@
             <input 
               type="password" 
               id="input-login-password" 
-              value="Pawan@8875@8875" 
               placeholder="Enter secure password" 
               required
+              autocomplete="current-password"
               class="w-full pl-10 pr-10 py-2.5 bg-slate-950/80 border border-slate-700 rounded-xl text-sm text-white placeholder-slate-500 focus:outline-none focus:border-amber-400 focus:ring-1 focus:ring-amber-400 transition-all font-mono"
             >
             <button type="button" onclick="togglePasswordVisibility('input-login-password')" class="absolute right-3.5 top-3 text-slate-400 hover:text-white text-xs">
@@ -202,15 +202,22 @@
           </button>
         </div>
 
-        <!-- Section: Security & Governance (RBAC) -->
+        <!-- Section: Security, Geofencing & RBAC -->
         <div class="space-y-1">
           <div class="text-[10px] font-bold text-slate-400 uppercase tracking-wider px-3 mb-1 font-mono">
-            Security & RBAC
+            Geofence & RBAC Governance
           </div>
+          <button onclick="switchTab('zones')" id="nav-zones" class="nav-btn w-full flex items-center justify-between px-3 py-2 rounded-xl text-xs font-semibold text-slate-300 hover:bg-slate-800 transition-all">
+            <div class="flex items-center gap-2.5">
+              <span>📍</span>
+              <span>Delivery Zones (Geofence)</span>
+            </div>
+            <span id="badge-zones-count" class="px-1.5 py-0.5 rounded text-[9px] font-mono bg-emerald-500/20 text-emerald-400">Live</span>
+          </button>
           <button onclick="switchTab('staff')" id="nav-staff" class="nav-btn w-full flex items-center justify-between px-3 py-2 rounded-xl text-xs font-semibold text-slate-300 hover:bg-slate-800 transition-all">
             <div class="flex items-center gap-2.5">
               <span>🛡️</span>
-              <span>Admin Staff & Roles</span>
+              <span>Location Admins & Roles</span>
             </div>
             <span class="px-1.5 py-0.5 rounded text-[9px] font-mono bg-amber-500/20 text-amber-400">Super Only</span>
           </button>
@@ -581,7 +588,43 @@
         </section>
 
         <!-- =================================================================== -->
-        <!-- TAB 9: STAFF & ROLES (RBAC - SUPER ADMIN ONLY) -->
+        <!-- TAB 9: GEOFENCED DELIVERY ZONES & SERVICE AREAS -->
+        <!-- =================================================================== -->
+        <section id="tab-zones" class="tab-content hidden space-y-4">
+          <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+            <div>
+              <div class="flex items-center gap-2">
+                <h2 class="text-xl font-bold font-serif text-white">Delivery Geofencing & Service Areas</h2>
+                <span class="px-2 py-0.5 rounded text-[10px] font-mono font-bold bg-emerald-500/20 text-emerald-400 border border-emerald-500/30">Location Fencing</span>
+              </div>
+              <p class="text-xs text-slate-400 mt-0.5">Control active cities, GPS delivery circles and serviceable launch boundaries</p>
+            </div>
+            <button onclick="openAddZoneModal()" class="px-4 py-2 rounded-xl text-xs font-mono font-bold bg-emerald-700 hover:bg-emerald-600 text-white flex items-center gap-2 cursor-pointer shadow-md">
+              <span>➕</span>
+              <span>Mark New Delivery Zone</span>
+            </button>
+          </div>
+
+          <!-- Quick Launch City Pills -->
+          <div class="flex flex-wrap gap-2 text-xs font-mono">
+            <span class="px-3 py-1 rounded-xl bg-slate-900 border border-slate-800 text-slate-300">Active Operational Hubs:</span>
+            <span class="px-3 py-1 rounded-xl bg-rose-950 border border-rose-700 text-rose-300 font-bold flex items-center gap-1.5">
+              <span class="w-2 h-2 rounded-full bg-rose-400 animate-ping"></span>
+              Alwar (Primary Hub - 2 Active Zones)
+            </span>
+            <span class="px-3 py-1 rounded-xl bg-amber-950 border border-amber-700 text-amber-300 font-bold">
+              Jaipur (1 Active Zone)
+            </span>
+          </div>
+
+          <!-- Zones Grid -->
+          <div id="zones-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+            <!-- Dynamic Zone Cards -->
+          </div>
+        </section>
+
+        <!-- =================================================================== -->
+        <!-- TAB 10: STAFF & ROLES (RBAC - SUPER ADMIN ONLY) -->
         <!-- =================================================================== -->
         <section id="tab-staff" class="tab-content hidden space-y-4">
           <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
@@ -839,13 +882,13 @@
     </div>
   </div>
 
-  <!-- MODAL: ADD SUB-ADMIN (RBAC - SUPER ADMIN DELEGATION) -->
+  <!-- MODAL: ADD SUB-ADMIN (LOCATION-BASED RBAC) -->
   <div id="modal-staff" class="hidden fixed inset-0 z-50 flex items-center justify-center bg-slate-950/80 backdrop-blur-sm p-4">
     <div class="w-full max-w-md bg-slate-900 border border-amber-500/40 rounded-3xl p-6 shadow-2xl relative">
       <div class="flex items-center justify-between pb-4 border-b border-slate-800 mb-5">
         <div>
-          <h3 class="text-base font-bold text-white font-serif">Create Sub-Admin Staff</h3>
-          <p class="text-xs text-slate-400">Role-based delegation by Super Admin</p>
+          <h3 class="text-base font-bold text-white font-serif">Create Location-Based Admin</h3>
+          <p class="text-xs text-slate-400">Scoped Delegation by Super Admin</p>
         </div>
         <button onclick="closeModal('modal-staff')" class="text-slate-400 hover:text-white text-lg">✕</button>
       </div>
@@ -853,29 +896,110 @@
       <form id="form-staff" onsubmit="handleSaveStaff(event)" class="space-y-4 font-mono text-xs">
         <div>
           <label class="block text-slate-300 mb-1">Full Name</label>
-          <input type="text" id="staff-name" placeholder="e.g. Rohan Verma" required class="w-full px-3 py-2 bg-slate-950 border border-slate-700 rounded-xl text-white focus:border-amber-400">
+          <input type="text" id="staff-name" placeholder="e.g. Alwar Branch Ops" required class="w-full px-3 py-2 bg-slate-950 border border-slate-700 rounded-xl text-white focus:border-amber-400">
         </div>
         <div>
-          <label class="block text-slate-300 mb-1">Login Email</label>
-          <input type="email" id="staff-email" placeholder="e.g. rohan@parosa.in" required class="w-full px-3 py-2 bg-slate-950 border border-slate-700 rounded-xl text-white focus:border-amber-400">
+          <label class="block text-slate-300 mb-1">Login Email / User ID</label>
+          <input type="email" id="staff-email" placeholder="e.g. alwar.manager@parosa.in" required class="w-full px-3 py-2 bg-slate-950 border border-slate-700 rounded-xl text-white focus:border-amber-400">
         </div>
         <div>
-          <label class="block text-slate-300 mb-1">Password</label>
+          <label class="block text-slate-300 mb-1">Login Password</label>
           <input type="text" id="staff-password" placeholder="Set temporary login password" required class="w-full px-3 py-2 bg-slate-950 border border-slate-700 rounded-xl text-amber-300 focus:border-amber-400">
         </div>
-        <div>
-          <label class="block text-slate-300 mb-1">Assigned Role</label>
-          <select id="staff-role" class="w-full px-3 py-2 bg-slate-950 border border-slate-700 rounded-xl text-white focus:border-amber-400">
-            <option value="OPS_MANAGER">Operations Manager (Orders & Kitchen)</option>
-            <option value="FINANCE_ADMIN">Finance Admin (Commissions & Settlements)</option>
-            <option value="MARKETING_ADMIN">Marketing Admin (Banners & Coupons)</option>
-            <option value="SUPPORT_ADMIN">Support Admin (Orders & Customers Read-Only)</option>
-          </select>
+        <div class="grid grid-cols-2 gap-3">
+          <div>
+            <label class="block text-slate-300 mb-1">Assigned Role</label>
+            <select id="staff-role" class="w-full px-3 py-2 bg-slate-950 border border-slate-700 rounded-xl text-white focus:border-amber-400">
+              <option value="CITY_MANAGER">City Manager (Full City Access)</option>
+              <option value="ORDER_MANAGER">Order Manager (Live Dispatch)</option>
+              <option value="RESTAURANT_MANAGER">Restaurant Manager (Menu/Kitchen)</option>
+              <option value="DELIVERY_MANAGER">Delivery Manager (Riders/Fleet)</option>
+              <option value="FINANCE_ADMIN">Finance Admin (Settlements)</option>
+              <option value="MARKETING_ADMIN">Marketing Admin (Banners/Coupons)</option>
+              <option value="SUPPORT_ADMIN">Support Admin (Read-Only)</option>
+              <option value="REPORT_VIEWER">Report Viewer (Analytics Only)</option>
+            </select>
+          </div>
+          <div>
+            <label class="block text-slate-300 mb-1">Location / City Scope</label>
+            <select id="staff-city" class="w-full px-3 py-2 bg-slate-950 border border-slate-700 rounded-xl text-white focus:border-amber-400">
+              <option value="Alwar">Alwar (Specific City)</option>
+              <option value="Jaipur">Jaipur (Specific City)</option>
+              <option value="Delhi">Delhi NCR</option>
+              <option value="GLOBAL">National (All Cities)</option>
+            </select>
+          </div>
         </div>
 
         <div class="pt-3 flex items-center justify-end gap-3 border-t border-slate-800">
           <button type="button" onclick="closeModal('modal-staff')" class="px-4 py-2 bg-slate-800 hover:bg-slate-700 text-slate-300 rounded-xl">Cancel</button>
-          <button type="submit" class="px-5 py-2 bg-rose-700 hover:bg-rose-600 text-white font-bold rounded-xl shadow-lg">Create Sub-Admin</button>
+          <button type="submit" class="px-5 py-2 bg-rose-700 hover:bg-rose-600 text-white font-bold rounded-xl shadow-lg">Create Location Admin</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- MODAL: ADD GEOFENCED DELIVERY ZONE -->
+  <div id="modal-zone" class="hidden fixed inset-0 z-50 flex items-center justify-center bg-slate-950/80 backdrop-blur-sm p-4">
+    <div class="w-full max-w-lg bg-slate-900 border border-emerald-500/40 rounded-3xl p-6 shadow-2xl relative">
+      <div class="flex items-center justify-between pb-4 border-b border-slate-800 mb-5">
+        <div>
+          <h3 class="text-base font-bold text-white font-serif">Mark New Delivery Zone</h3>
+          <p class="text-xs text-slate-400">Set GPS center coordinates, delivery radius & pricing</p>
+        </div>
+        <button onclick="closeModal('modal-zone')" class="text-slate-400 hover:text-white text-lg">✕</button>
+      </div>
+
+      <form id="form-zone" onsubmit="handleSaveZone(event)" class="space-y-4 font-mono text-xs">
+        <div>
+          <label class="block text-slate-300 mb-1">Zone Name</label>
+          <input type="text" id="zone-name" placeholder="e.g. Alwar Central Hub & Bus Stand" required class="w-full px-3 py-2 bg-slate-950 border border-slate-700 rounded-xl text-white focus:border-emerald-400">
+        </div>
+
+        <div class="grid grid-cols-2 gap-3">
+          <div>
+            <label class="block text-slate-300 mb-1">City</label>
+            <input type="text" id="zone-city" value="Alwar" placeholder="e.g. Alwar" required class="w-full px-3 py-2 bg-slate-950 border border-slate-700 rounded-xl text-white focus:border-emerald-400">
+          </div>
+          <div>
+            <label class="block text-slate-300 mb-1">Delivery Radius (KM)</label>
+            <input type="number" id="zone-radius" value="6" step="0.5" min="1" max="50" required class="w-full px-3 py-2 bg-slate-950 border border-slate-700 rounded-xl text-emerald-400 font-bold focus:border-emerald-400">
+          </div>
+        </div>
+
+        <div class="grid grid-cols-2 gap-3">
+          <div>
+            <label class="block text-slate-300 mb-1">Center Latitude</label>
+            <input type="number" id="zone-lat" value="27.5530" step="0.0001" required class="w-full px-3 py-2 bg-slate-950 border border-slate-700 rounded-xl text-white focus:border-emerald-400">
+          </div>
+          <div>
+            <label class="block text-slate-300 mb-1">Center Longitude</label>
+            <input type="number" id="zone-lng" value="76.6346" step="0.0001" required class="w-full px-3 py-2 bg-slate-950 border border-slate-700 rounded-xl text-white focus:border-emerald-400">
+          </div>
+        </div>
+
+        <div class="grid grid-cols-2 gap-3">
+          <div>
+            <label class="block text-slate-300 mb-1">Min Order Value (₹)</label>
+            <input type="number" id="zone-min-order" value="149" min="0" required class="w-full px-3 py-2 bg-slate-950 border border-slate-700 rounded-xl text-white focus:border-emerald-400">
+          </div>
+          <div>
+            <label class="block text-slate-300 mb-1">Base Delivery Fee (₹)</label>
+            <input type="number" id="zone-fee" value="30" min="0" required class="w-full px-3 py-2 bg-slate-950 border border-slate-700 rounded-xl text-white focus:border-emerald-400">
+          </div>
+        </div>
+
+        <div class="p-3 rounded-xl bg-slate-950 border border-slate-800 text-[11px] text-slate-400 space-y-1">
+          <div class="flex items-center gap-1.5 text-emerald-400 font-bold">
+            <span>🛡️</span>
+            <span>Real-time Haversine / PostGIS Checking</span>
+          </div>
+          <p>Customer App automatically checks customer GPS location against this circle before allowing checkout.</p>
+        </div>
+
+        <div class="pt-3 flex items-center justify-end gap-3 border-t border-slate-800">
+          <button type="button" onclick="closeModal('modal-zone')" class="px-4 py-2 bg-slate-800 hover:bg-slate-700 text-slate-300 rounded-xl">Cancel</button>
+          <button type="submit" class="px-5 py-2 bg-emerald-700 hover:bg-emerald-600 text-white font-bold rounded-xl shadow-lg">Save & Activate Zone</button>
         </div>
       </form>
     </div>
@@ -950,24 +1074,72 @@
         name: "Pawan",
         email: "pawan@alwar.inn",
         role: "SUPER_ADMIN",
+        cityScope: "GLOBAL (All Cities)",
         scope: "Global Master Authority",
         status: "ACTIVE"
       },
       {
         id: "st_2",
-        name: "Operations Desk",
-        email: "ops@parosa.in",
-        role: "OPS_MANAGER",
-        scope: "Orders, Kitchen, Rider Dispatch",
+        name: "Alwar City Manager",
+        email: "alwar.ops@parosa.in",
+        role: "CITY_MANAGER",
+        cityScope: "Alwar",
+        scope: "Alwar City Fenced Operations",
         status: "ACTIVE"
       },
       {
         id: "st_3",
+        name: "Operations & Live Dispatch",
+        email: "ops@parosa.in",
+        role: "ORDER_MANAGER",
+        cityScope: "GLOBAL",
+        scope: "Orders, Kitchen, Rider Dispatch",
+        status: "ACTIVE"
+      },
+      {
+        id: "st_4",
         name: "Accounts & Finance",
         email: "finance@parosa.in",
         role: "FINANCE_ADMIN",
+        cityScope: "GLOBAL",
         scope: "Commissions, Payouts, Settlement",
         status: "ACTIVE"
+      }
+    ];
+
+    let zonesData = JSON.parse(localStorage.getItem("parosa_zones")) || [
+      {
+        id: "zone_1",
+        name: "Alwar Central Hub & Station Circle",
+        city: "Alwar",
+        lat: 27.5530,
+        lng: 76.6346,
+        radiusKm: 6.0,
+        minOrder: 149,
+        baseFee: 30,
+        active: true
+      },
+      {
+        id: "zone_2",
+        name: "Alwar Matsya Industrial Area (MIA)",
+        city: "Alwar",
+        lat: 27.5120,
+        lng: 76.6540,
+        radiusKm: 8.0,
+        minOrder: 199,
+        baseFee: 40,
+        active: true
+      },
+      {
+        id: "zone_3",
+        name: "Jaipur Malviya Nagar & WTP",
+        city: "Jaipur",
+        lat: 26.8530,
+        lng: 75.8050,
+        radiusKm: 5.0,
+        minOrder: 199,
+        baseFee: 35,
+        active: true
       }
     ];
 
@@ -1565,10 +1737,116 @@
     }
 
     // -------------------------------------------------------------
-    // STAFF & ROLES (RBAC)
+    // GEOFENCED DELIVERY ZONES
+    // -------------------------------------------------------------
+    function renderZones() {
+      const grid = document.getElementById("zones-grid");
+      if (!grid) return;
+      grid.innerHTML = "";
+
+      const activeBadge = document.getElementById("badge-zones-count");
+      if (activeBadge) {
+        activeBadge.textContent = `${zonesData.filter(z => z.active).length} Active`;
+      }
+
+      zonesData.forEach(zone => {
+        const card = document.createElement("div");
+        card.className = `p-5 rounded-2xl border transition-all ${zone.active ? 'bg-slate-900/90 border-emerald-700/60 shadow-lg shadow-emerald-950/20' : 'bg-slate-950/80 border-slate-800 opacity-60'}`;
+        card.innerHTML = `
+          <div class="flex items-start justify-between mb-3">
+            <div>
+              <div class="flex items-center gap-2">
+                <span class="w-2.5 h-2.5 rounded-full ${zone.active ? 'bg-emerald-400 animate-pulse' : 'bg-slate-600'}"></span>
+                <h4 class="font-bold text-white text-sm">${zone.name}</h4>
+              </div>
+              <span class="text-[11px] font-mono font-bold text-amber-400 mt-0.5 block">📍 City: ${zone.city}</span>
+            </div>
+            <button onclick="toggleZone('${zone.id}')" class="px-2.5 py-1 rounded-lg text-[10px] font-bold font-mono transition-all ${zone.active ? 'bg-emerald-900/60 text-emerald-300 border border-emerald-700 hover:bg-emerald-800' : 'bg-slate-800 text-slate-400 hover:bg-slate-700'}">
+              ${zone.active ? '🟢 LIVE' : '⚪ PAUSED'}
+            </button>
+          </div>
+
+          <div class="space-y-2 text-xs font-mono py-3 border-y border-slate-800/80 my-3">
+            <div class="flex justify-between text-slate-400">
+              <span>Delivery Radius:</span>
+              <span class="text-emerald-400 font-bold">${zone.radiusKm} KM Circle</span>
+            </div>
+            <div class="flex justify-between text-slate-400">
+              <span>GPS Center:</span>
+              <span class="text-slate-300 font-bold">${zone.lat.toFixed(4)}, ${zone.lng.toFixed(4)}</span>
+            </div>
+            <div class="flex justify-between text-slate-400">
+              <span>Min Order:</span>
+              <span class="text-slate-200">₹${zone.minOrder}</span>
+            </div>
+            <div class="flex justify-between text-slate-400">
+              <span>Base Delivery Fee:</span>
+              <span class="text-slate-200">₹${zone.baseFee}</span>
+            </div>
+          </div>
+
+          <div class="flex items-center justify-between text-[11px] font-mono pt-1">
+            <span class="text-slate-500">PostGIS Fenced</span>
+            <button onclick="deleteZone('${zone.id}')" class="text-rose-400 hover:text-rose-300 font-bold cursor-pointer">Remove Zone</button>
+          </div>
+        `;
+        grid.appendChild(card);
+      });
+    }
+
+    function openAddZoneModal() {
+      if (currentAdmin?.role !== "SUPER_ADMIN" && currentAdmin?.role !== "CITY_MANAGER") {
+        alert("🔒 Unauthorized: Only Super Admin or City Manager can mark delivery zones.");
+        return;
+      }
+      document.getElementById("modal-zone").classList.remove("hidden");
+    }
+
+    function handleSaveZone(e) {
+      e.preventDefault();
+      const newZone = {
+        id: "zone_" + Date.now(),
+        name: document.getElementById("zone-name").value.trim(),
+        city: document.getElementById("zone-city").value.trim(),
+        radiusKm: parseFloat(document.getElementById("zone-radius").value),
+        lat: parseFloat(document.getElementById("zone-lat").value),
+        lng: parseFloat(document.getElementById("zone-lng").value),
+        minOrder: parseFloat(document.getElementById("zone-min-order").value),
+        baseFee: parseFloat(document.getElementById("zone-fee").value),
+        active: true
+      };
+
+      zonesData.push(newZone);
+      localStorage.setItem("parosa_zones", JSON.stringify(zonesData));
+      closeModal("modal-zone");
+      renderZones();
+      logAuditEvent("ZONE_CREATED", `${newZone.name} (${newZone.city})`, `Radius: ${newZone.radiusKm} KM, GPS: ${newZone.lat},${newZone.lng}`);
+      alert(`✅ Delivery Zone '${newZone.name}' successfully activated for ${newZone.city}!`);
+    }
+
+    function toggleZone(id) {
+      zonesData = zonesData.map(z => z.id === id ? { ...z, active: !z.active } : z);
+      localStorage.setItem("parosa_zones", JSON.stringify(zonesData));
+      renderZones();
+      const z = zonesData.find(item => item.id === id);
+      logAuditEvent("ZONE_TOGGLED", z.name, `Operational Status: ${z.active ? 'ACTIVE' : 'PAUSED'}`);
+    }
+
+    function deleteZone(id) {
+      const z = zonesData.find(item => item.id === id);
+      if (!confirm(`Are you sure you want to remove delivery zone '${z?.name}'? Customers in this area won't be able to order.`)) return;
+      zonesData = zonesData.filter(item => item.id !== id);
+      localStorage.setItem("parosa_zones", JSON.stringify(zonesData));
+      renderZones();
+      logAuditEvent("ZONE_DELETED", id, "Geofence boundary removed");
+    }
+
+    // -------------------------------------------------------------
+    // LOCATION-BASED STAFF & ROLES (RBAC)
     // -------------------------------------------------------------
     function renderStaff() {
       const tbody = document.getElementById("staff-table-body");
+      if (!tbody) return;
       tbody.innerHTML = "";
 
       staffData.forEach(st => {
@@ -1576,13 +1854,15 @@
         const isSuper = st.role === "SUPER_ADMIN";
         row.innerHTML = `
           <td class="py-3.5 px-4 font-bold text-white">${st.name}</td>
-          <td class="py-3.5 px-4 text-amber-400">${st.email}</td>
+          <td class="py-3.5 px-4 text-amber-400 font-mono">${st.email}</td>
           <td class="py-3.5 px-4">
             <span class="px-2 py-0.5 rounded text-[10px] font-bold ${isSuper ? 'bg-amber-500/20 text-amber-400 border border-amber-500/30' : 'bg-slate-800 text-slate-300'}">
               ${st.role}
             </span>
           </td>
-          <td class="py-3.5 px-4 text-slate-400 text-[11px]">${st.scope}</td>
+          <td class="py-3.5 px-4 text-emerald-300 text-[11px] font-bold font-mono">
+            📍 ${st.cityScope || 'GLOBAL'}
+          </td>
           <td class="py-3.5 px-4">
             <span class="px-2 py-0.5 rounded text-[10px] font-bold bg-emerald-950 text-emerald-400 border border-emerald-800">
               ${st.status}
@@ -1611,7 +1891,8 @@
         name: document.getElementById("staff-name").value.trim(),
         email: document.getElementById("staff-email").value.trim().toLowerCase(),
         role: document.getElementById("staff-role").value,
-        scope: document.getElementById("staff-role").options[document.getElementById("staff-role").selectedIndex].text,
+        cityScope: document.getElementById("staff-city").value,
+        scope: `Scope: ${document.getElementById("staff-city").value} (${document.getElementById("staff-role").value})`,
         status: "ACTIVE"
       };
 
@@ -1619,8 +1900,8 @@
       localStorage.setItem("parosa_staff", JSON.stringify(staffData));
       closeModal("modal-staff");
       renderStaff();
-      logAuditEvent("SUB_ADMIN_CREATED", newStaff.email, `Assigned role ${newStaff.role} by Super Admin`);
-      alert(`✅ New Sub-Admin created for ${newStaff.name} (${newStaff.role})!`);
+      logAuditEvent("SUB_ADMIN_CREATED", `${newStaff.email} [${newStaff.cityScope}]`, `Assigned role ${newStaff.role} with City Scope ${newStaff.cityScope}`);
+      alert(`✅ New Location Admin created for ${newStaff.name} (${newStaff.cityScope} - ${newStaff.role})!`);
     }
 
     function deleteStaff(id) {
@@ -1688,6 +1969,7 @@
       renderBanners();
       renderCoupons();
       renderCommissions();
+      renderZones();
       renderStaff();
       renderAuditLogs();
     }
