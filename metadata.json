@@ -1,0 +1,6 @@
+{
+  "name": "PAROSA Admin Panel",
+  "description": "Production-ready Role-Based Access Control Admin Panel for the PAROSA Food Delivery Platform with centralized RBAC, access scope quarantine, and append-only audit logging.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
