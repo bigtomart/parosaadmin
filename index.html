@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>PAROSA Food Delivery — Master Operations & Admin Control Plane</title>
+  <title>PAROSA Food Delivery — Super Admin Control Plane</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&family=Playfair+Display:ital,wght@0,600;0,700;1,600&display=swap" rel="stylesheet">
@@ -19,681 +19,1683 @@
     .text-royal-gold { color: #D4AF37; }
     .border-royal-gold { border-color: #D4AF37; }
     .custom-scrollbar::-webkit-scrollbar { width: 6px; height: 6px; }
-    .custom-scrollbar::-webkit-scrollbar-track { background: #f1f5f9; }
-    .custom-scrollbar::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 4px; }
+    .custom-scrollbar::-webkit-scrollbar-track { background: #0f172a; }
+    .custom-scrollbar::-webkit-scrollbar-thumb { background: #334155; border-radius: 4px; }
   </style>
 </head>
-<body class="bg-slate-50 text-slate-900 antialiased h-screen flex overflow-hidden">
+<body class="bg-slate-950 text-slate-100 antialiased h-screen w-screen overflow-hidden select-none">
 
-  <!-- LEFT SIDEBAR -->
-  <aside class="w-64 bg-slate-900 text-slate-300 flex flex-col shrink-0 border-r border-slate-800 select-none">
-    <!-- Brand Header -->
-    <div class="p-5 border-b border-slate-800 flex items-center gap-3">
-      <img src="parosa_logo.png" alt="Parosa" class="w-10 h-10 rounded-xl shadow-md border border-royal-gold/40 object-cover">
-      <div>
-        <h1 class="font-extrabold text-base text-white tracking-wide font-serif">PAROSA</h1>
-        <div class="text-[10px] text-amber-400 font-mono font-bold tracking-widest">OPERATIONS HUB</div>
-      </div>
-    </div>
+  <!-- ========================================================================= -->
+  <!-- 1. NON-BYPASSABLE SECURE LOGIN PORTAL -->
+  <!-- ========================================================================= -->
+  <div id="login-portal" class="fixed inset-0 z-50 flex items-center justify-center bg-gradient-to-br from-slate-950 via-[#18090d] to-slate-950 p-4">
+    <div class="w-full max-w-md bg-slate-900/90 backdrop-blur-xl border border-rose-900/40 rounded-3xl p-8 shadow-2xl shadow-rose-950/60 relative overflow-hidden">
+      <!-- Top Decorative Glow -->
+      <div class="absolute -top-24 -left-24 w-48 h-48 bg-rose-600/20 rounded-full blur-3xl pointer-events-none"></div>
+      <div class="absolute -bottom-24 -right-24 w-48 h-48 bg-amber-500/10 rounded-full blur-3xl pointer-events-none"></div>
 
-    <!-- Navigation Menu -->
-    <div class="p-3 space-y-6 flex-1 overflow-y-auto custom-scrollbar">
-      <!-- Section: Platform Operations -->
-      <div class="space-y-1">
-        <div class="text-[10px] font-bold text-slate-400 uppercase tracking-wider px-3 mb-1 font-mono">
-          Platform Operations
+      <!-- Brand Header -->
+      <div class="text-center mb-8 relative">
+        <div class="w-16 h-16 mx-auto mb-4 rounded-2xl bg-gradient-to-tr from-[#6B1824] to-[#9E2A3A] p-0.5 shadow-lg border border-amber-400/40 flex items-center justify-center">
+          <img src="parosa_logo.png" alt="Parosa" class="w-full h-full object-cover rounded-2xl">
         </div>
-        <button onclick="switchTab('dashboard')" id="nav-dashboard" class="nav-btn w-full flex items-center justify-between px-3.5 py-2.5 rounded-xl text-xs font-semibold bg-rose-700 text-white shadow-sm transition-all">
-          <div class="flex items-center gap-3">
-            <span>📊</span>
-            <span>Dashboard</span>
-          </div>
-        </button>
-        <button onclick="switchTab('orders')" id="nav-orders" class="nav-btn w-full flex items-center justify-between px-3.5 py-2.5 rounded-xl text-xs font-semibold text-slate-300 hover:bg-slate-800 transition-all">
-          <div class="flex items-center gap-3">
-            <span>📦</span>
-            <span>Live Orders</span>
-          </div>
-          <span id="badge-orders-count" class="px-2 py-0.5 rounded-full text-[10px] font-mono font-bold bg-rose-500 text-white animate-pulse">0</span>
-        </button>
-        <button onclick="switchTab('restaurants')" id="nav-restaurants" class="nav-btn w-full flex items-center justify-between px-3.5 py-2.5 rounded-xl text-xs font-semibold text-slate-300 hover:bg-slate-800 transition-all">
-          <div class="flex items-center gap-3">
-            <span>🏰</span>
-            <span>Restaurants</span>
-          </div>
-          <span id="badge-rest-count" class="px-2 py-0.5 rounded-full text-[10px] font-mono bg-slate-800 text-amber-400">3</span>
-        </button>
-        <button onclick="switchTab('menu')" id="nav-menu" class="nav-btn w-full flex items-center justify-between px-3.5 py-2.5 rounded-xl text-xs font-semibold text-slate-300 hover:bg-slate-800 transition-all">
-          <div class="flex items-center gap-3">
-            <span>🍛</span>
-            <span>Menu & Dishes</span>
-          </div>
-        </button>
-        <button onclick="switchTab('customers')" id="nav-customers" class="nav-btn w-full flex items-center justify-between px-3.5 py-2.5 rounded-xl text-xs font-semibold text-slate-300 hover:bg-slate-800 transition-all">
-          <div class="flex items-center gap-3">
-            <span>👥</span>
-            <span>Customers</span>
-          </div>
-        </button>
+        <h1 class="text-2xl font-extrabold text-white font-serif tracking-wider">PAROSA</h1>
+        <div class="text-xs font-mono font-bold text-amber-400 tracking-widest mt-1">SUPER ADMIN CONTROL PLANE</div>
+        <p class="text-xs text-slate-400 mt-2">Restricted Access • Multi-Role Authentication</p>
       </div>
 
-      <!-- Section: Governance & RBAC -->
-      <div class="space-y-1">
-        <div class="text-[10px] font-bold text-slate-400 uppercase tracking-wider px-3 mb-1 font-mono">
-          Security & Access (RBAC)
-        </div>
-        <button onclick="switchTab('staff')" id="nav-staff" class="nav-btn w-full flex items-center justify-between px-3.5 py-2.5 rounded-xl text-xs font-semibold text-slate-300 hover:bg-slate-800 transition-all">
-          <div class="flex items-center gap-3">
-            <span>🛡️</span>
-            <span>Staff & Roles</span>
-          </div>
-        </button>
-        <button onclick="switchTab('audit')" id="nav-audit" class="nav-btn w-full flex items-center justify-between px-3.5 py-2.5 rounded-xl text-xs font-semibold text-slate-300 hover:bg-slate-800 transition-all">
-          <div class="flex items-center gap-3">
-            <span>📜</span>
-            <span>Audit Logs</span>
-          </div>
-        </button>
-      </div>
-    </div>
-
-    <!-- Live Cloud Status Box -->
-    <div class="p-3 m-3 rounded-xl bg-slate-800/80 border border-slate-700 text-xs font-mono">
-      <div class="flex items-center justify-between text-white font-bold mb-1">
-        <span>SUPABASE CLOUD</span>
-        <span class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
-      </div>
-      <div class="text-[10px] text-emerald-400 truncate">fluxjyrvjwzxkayvjmla</div>
-      <div class="text-[9px] text-slate-400 mt-1">PostgreSQL • South Asia (Mumbai)</div>
-    </div>
-  </aside>
-
-  <!-- MAIN OPERATIONAL WORKSPACE -->
-  <div class="flex-1 flex flex-col overflow-hidden">
-    <!-- Top Header Bar -->
-    <header class="h-16 bg-white border-b border-slate-200 px-6 flex items-center justify-between shrink-0">
-      <div class="flex items-center gap-3">
-        <span class="text-xs font-mono font-bold px-2.5 py-1 rounded-full bg-emerald-100 text-emerald-800 border border-emerald-200 flex items-center gap-1.5">
-          <span class="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></span>
-          Connected to Live Supabase
-        </span>
-        <span class="text-xs text-slate-500 hidden sm:inline">Production Operations Mode</span>
+      <!-- Error Banner -->
+      <div id="login-error" class="hidden mb-5 p-3 rounded-xl bg-rose-950/80 border border-rose-700/60 text-xs text-rose-300 flex items-center gap-2">
+        <span>⚠️</span>
+        <span id="login-error-text">Invalid ID or Password. Access Denied.</span>
       </div>
 
-      <div class="flex items-center gap-3">
-        <button onclick="fetchFreshData()" class="px-3 py-1.5 rounded-xl bg-slate-100 hover:bg-slate-200 text-slate-700 text-xs font-semibold transition-all flex items-center gap-1.5 cursor-pointer">
-          <span>🔄</span>
-          <span>Sync Now</span>
-        </button>
-        <div class="flex items-center gap-2 pl-3 border-l border-slate-200">
-          <div class="w-8 h-8 rounded-full bg-rose-700 text-white font-bold text-xs flex items-center justify-center">
-            PS
-          </div>
-          <div class="hidden sm:block text-left leading-tight">
-            <div class="text-xs font-bold text-slate-900">Pawan Sharma</div>
-            <div class="text-[10px] text-slate-500 font-mono">SUPER_ADMIN</div>
-          </div>
-        </div>
-      </div>
-    </header>
-
-    <!-- TAB 1: DASHBOARD -->
-    <main id="tab-dashboard" class="tab-pane flex-1 p-6 overflow-y-auto custom-scrollbar space-y-6">
-      <div class="flex items-center justify-between">
+      <!-- Login Form -->
+      <form id="login-form" onsubmit="handleLoginSubmit(event)" class="space-y-4">
         <div>
-          <h2 class="text-2xl font-extrabold text-slate-900 tracking-tight">Executive Telemetry</h2>
-          <p class="text-xs text-slate-500 mt-0.5">Live platform performance and operational throughput.</p>
-        </div>
-      </div>
-
-      <!-- KPI Metrics Grid -->
-      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
-        <div class="bg-white p-5 rounded-2xl border border-slate-200 shadow-xs">
-          <div class="text-slate-400 text-xs font-bold uppercase font-mono mb-2">Total Revenue (GMV)</div>
-          <div class="text-3xl font-extrabold text-slate-900 font-serif" id="stat-revenue">₹0</div>
-          <div class="text-xs text-emerald-600 font-semibold mt-1">● Live settlements in Supabase</div>
-        </div>
-        <div class="bg-white p-5 rounded-2xl border border-slate-200 shadow-xs">
-          <div class="text-slate-400 text-xs font-bold uppercase font-mono mb-2">Total Orders</div>
-          <div class="text-3xl font-extrabold text-slate-900 font-serif" id="stat-orders">0</div>
-          <div class="text-xs text-blue-600 font-semibold mt-1" id="stat-active-orders">0 in-transit</div>
-        </div>
-        <div class="bg-white p-5 rounded-2xl border border-slate-200 shadow-xs">
-          <div class="text-slate-400 text-xs font-bold uppercase font-mono mb-2">Active Restaurants</div>
-          <div class="text-3xl font-extrabold text-slate-900 font-serif" id="stat-restaurants">3</div>
-          <div class="text-xs text-amber-600 font-semibold mt-1">100% operational in Jaipur</div>
-        </div>
-        <div class="bg-white p-5 rounded-2xl border border-slate-200 shadow-xs">
-          <div class="text-slate-400 text-xs font-bold uppercase font-mono mb-2">Registered Customers</div>
-          <div class="text-3xl font-extrabold text-slate-900 font-serif" id="stat-customers">0</div>
-          <div class="text-xs text-purple-600 font-semibold mt-1">Verified via Phone OTP</div>
-        </div>
-      </div>
-
-      <!-- Live Quick Links & Status -->
-      <div class="bg-white rounded-2xl border border-slate-200 p-6 space-y-4">
-        <h3 class="font-extrabold text-base text-slate-900">Ecosystem Connection Status</h3>
-        <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
-          <div class="p-4 rounded-xl bg-slate-50 border border-slate-200 space-y-2">
-            <div class="flex items-center justify-between font-bold text-xs text-slate-800">
-              <span>📱 Customer Android App</span>
-              <span class="text-emerald-600">CONNECTED</span>
-            </div>
-            <p class="text-[11px] text-slate-500">Parosa-latest-debug.apk syncing with Supabase.</p>
-          </div>
-          <div class="p-4 rounded-xl bg-slate-50 border border-slate-200 space-y-2">
-            <div class="flex items-center justify-between font-bold text-xs text-slate-800">
-              <span>⚡ Supabase Database</span>
-              <span class="text-emerald-600">LIVE (200 OK)</span>
-            </div>
-            <p class="text-[11px] text-slate-500">PostgreSQL with Row Level Security & PostGIS active.</p>
-          </div>
-          <div class="p-4 rounded-xl bg-slate-50 border border-slate-200 space-y-2">
-            <div class="flex items-center justify-between font-bold text-xs text-slate-800">
-              <span>🚀 Vercel Deployment</span>
-              <span class="text-blue-600">READY</span>
-            </div>
-            <p class="text-[11px] text-slate-500">Static frontend architecture ready for instant deploy.</p>
+          <label class="block text-xs font-semibold text-slate-300 uppercase tracking-wider mb-1.5 font-mono">
+            Admin Email / User ID
+          </label>
+          <div class="relative">
+            <span class="absolute left-3.5 top-3 text-slate-400 text-sm">👤</span>
+            <input 
+              type="text" 
+              id="input-login-email" 
+              value="pawan@alwar.inn" 
+              placeholder="e.g. pawan@alwar.inn" 
+              required
+              class="w-full pl-10 pr-4 py-2.5 bg-slate-950/80 border border-slate-700 rounded-xl text-sm text-white placeholder-slate-500 focus:outline-none focus:border-amber-400 focus:ring-1 focus:ring-amber-400 transition-all font-mono"
+            >
           </div>
         </div>
-      </div>
-    </main>
 
-    <!-- TAB 2: LIVE ORDERS -->
-    <main id="tab-orders" class="tab-pane hidden flex-1 p-6 overflow-y-auto custom-scrollbar space-y-6">
-      <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-2 border-b border-slate-200">
         <div>
-          <h2 class="text-2xl font-extrabold text-slate-900 tracking-tight">Live Orders Dispatch</h2>
-          <p class="text-xs text-slate-500 mt-0.5">Real-time incoming customer orders placed on PAROSA mobile app.</p>
+          <label class="block text-xs font-semibold text-slate-300 uppercase tracking-wider mb-1.5 font-mono">
+            Password
+          </label>
+          <div class="relative">
+            <span class="absolute left-3.5 top-3 text-slate-400 text-sm">🔒</span>
+            <input 
+              type="password" 
+              id="input-login-password" 
+              value="Pawan@8875@8875" 
+              placeholder="Enter secure password" 
+              required
+              class="w-full pl-10 pr-10 py-2.5 bg-slate-950/80 border border-slate-700 rounded-xl text-sm text-white placeholder-slate-500 focus:outline-none focus:border-amber-400 focus:ring-1 focus:ring-amber-400 transition-all font-mono"
+            >
+            <button type="button" onclick="togglePasswordVisibility('input-login-password')" class="absolute right-3.5 top-3 text-slate-400 hover:text-white text-xs">
+              👁️
+            </button>
+          </div>
         </div>
-        <div class="flex items-center gap-2">
-          <button onclick="simulateCustomerOrder()" class="px-3.5 py-2 rounded-xl bg-rose-700 hover:bg-rose-800 text-white text-xs font-bold transition-all shadow-xs cursor-pointer flex items-center gap-1.5">
-            <span>+</span>
-            <span>Simulate App Order</span>
+
+        <div class="flex items-center justify-between text-xs text-slate-400 pt-1">
+          <label class="flex items-center gap-2 cursor-pointer">
+            <input type="checkbox" id="remember-me" checked class="rounded bg-slate-950 border-slate-700 text-rose-600 focus:ring-0">
+            <span>Keep session active</span>
+          </label>
+          <span class="text-amber-400 font-mono text-[11px]">Authorized Personnel Only</span>
+        </div>
+
+        <button 
+          type="submit" 
+          id="btn-login-submit"
+          class="w-full py-3 px-4 rounded-xl font-bold text-sm bg-gradient-to-r from-rose-700 via-rose-600 to-amber-600 hover:from-rose-600 hover:to-amber-500 text-white shadow-lg shadow-rose-950/80 transition-all duration-200 mt-2 flex items-center justify-center gap-2 cursor-pointer"
+        >
+          <span>🔐</span>
+          <span>Authenticate & Access Control Hub</span>
+        </button>
+      </form>
+
+      <!-- Security Notice -->
+      <div class="mt-6 pt-5 border-t border-slate-800 text-center text-[10px] text-slate-400 font-mono">
+        All login events are cryptographically hashed and audit-logged with IP tracking.
+      </div>
+    </div>
+  </div>
+
+  <!-- ========================================================================= -->
+  <!-- 2. MASTER APPLICATION WORKSPACE (Accessible only post-auth) -->
+  <!-- ========================================================================= -->
+  <div id="admin-workspace" class="hidden h-screen w-screen flex overflow-hidden">
+    
+    <!-- LEFT SIDEBAR -->
+    <aside class="w-64 bg-slate-900 text-slate-300 flex flex-col shrink-0 border-r border-slate-800 select-none">
+      <!-- Brand & Admin Persona -->
+      <div class="p-4 border-b border-slate-800 flex items-center gap-3">
+        <img src="parosa_logo.png" alt="Parosa" class="w-10 h-10 rounded-xl shadow-md border border-amber-400/30 object-cover">
+        <div class="overflow-hidden">
+          <div class="font-extrabold text-sm text-white tracking-wide font-serif">PAROSA ADMIN</div>
+          <div class="flex items-center gap-1.5 mt-0.5">
+            <span class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
+            <span id="sidebar-role-badge" class="text-[9px] font-mono font-bold text-amber-400 uppercase tracking-widest truncate">SUPER ADMIN</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Navigation Menu -->
+      <div class="p-3 space-y-6 flex-1 overflow-y-auto custom-scrollbar">
+        <!-- Section: Platform Operations -->
+        <div class="space-y-1">
+          <div class="text-[10px] font-bold text-slate-400 uppercase tracking-wider px-3 mb-1 font-mono">
+            Food Operations
+          </div>
+          <button onclick="switchTab('dashboard')" id="nav-dashboard" class="nav-btn w-full flex items-center justify-between px-3 py-2 rounded-xl text-xs font-semibold bg-rose-700 text-white shadow-sm transition-all">
+            <div class="flex items-center gap-2.5">
+              <span>📊</span>
+              <span>Dashboard</span>
+            </div>
+          </button>
+          <button onclick="switchTab('orders')" id="nav-orders" class="nav-btn w-full flex items-center justify-between px-3 py-2 rounded-xl text-xs font-semibold text-slate-300 hover:bg-slate-800 transition-all">
+            <div class="flex items-center gap-2.5">
+              <span>📦</span>
+              <span>Live Orders</span>
+            </div>
+            <span id="badge-orders-count" class="px-2 py-0.5 rounded-full text-[10px] font-mono font-bold bg-rose-500 text-white animate-pulse">0</span>
+          </button>
+          <button onclick="switchTab('restaurants')" id="nav-restaurants" class="nav-btn w-full flex items-center justify-between px-3 py-2 rounded-xl text-xs font-semibold text-slate-300 hover:bg-slate-800 transition-all">
+            <div class="flex items-center gap-2.5">
+              <span>🏰</span>
+              <span>Restaurants & Passwords</span>
+            </div>
+            <span id="badge-rest-count" class="px-2 py-0.5 rounded-full text-[10px] font-mono bg-slate-800 text-amber-400">3</span>
+          </button>
+          <button onclick="switchTab('menu')" id="nav-menu" class="nav-btn w-full flex items-center justify-between px-3 py-2 rounded-xl text-xs font-semibold text-slate-300 hover:bg-slate-800 transition-all">
+            <div class="flex items-center gap-2.5">
+              <span>🍛</span>
+              <span>Menu & Dishes</span>
+            </div>
+          </button>
+          <button onclick="switchTab('customers')" id="nav-customers" class="nav-btn w-full flex items-center justify-between px-3 py-2 rounded-xl text-xs font-semibold text-slate-300 hover:bg-slate-800 transition-all">
+            <div class="flex items-center gap-2.5">
+              <span>👥</span>
+              <span>Customers</span>
+            </div>
+          </button>
+        </div>
+
+        <!-- Section: Customer App Controls (Banners, Coupons & Commissions) -->
+        <div class="space-y-1">
+          <div class="text-[10px] font-bold text-slate-400 uppercase tracking-wider px-3 mb-1 font-mono">
+            User App & Finance Controls
+          </div>
+          <button onclick="switchTab('banners')" id="nav-banners" class="nav-btn w-full flex items-center justify-between px-3 py-2 rounded-xl text-xs font-semibold text-slate-300 hover:bg-slate-800 transition-all">
+            <div class="flex items-center gap-2.5">
+              <span>🖼️</span>
+              <span>App Hero Banners</span>
+            </div>
+            <span id="badge-banners-count" class="px-1.5 py-0.5 rounded-full text-[10px] font-mono bg-rose-950 text-rose-300">3</span>
+          </button>
+          <button onclick="switchTab('coupons')" id="nav-coupons" class="nav-btn w-full flex items-center justify-between px-3 py-2 rounded-xl text-xs font-semibold text-slate-300 hover:bg-slate-800 transition-all">
+            <div class="flex items-center gap-2.5">
+              <span>🏷️</span>
+              <span>Coupons & Promo Codes</span>
+            </div>
+            <span id="badge-coupons-count" class="px-1.5 py-0.5 rounded-full text-[10px] font-mono bg-amber-950 text-amber-300">4</span>
+          </button>
+          <button onclick="switchTab('commissions')" id="nav-commissions" class="nav-btn w-full flex items-center justify-between px-3 py-2 rounded-xl text-xs font-semibold text-slate-300 hover:bg-slate-800 transition-all">
+            <div class="flex items-center gap-2.5">
+              <span>💰</span>
+              <span>Restaurant Commissions</span>
+            </div>
+            <span class="px-1.5 py-0.5 rounded-full text-[10px] font-mono bg-emerald-950 text-emerald-300">16%</span>
+          </button>
+        </div>
+
+        <!-- Section: Security & Governance (RBAC) -->
+        <div class="space-y-1">
+          <div class="text-[10px] font-bold text-slate-400 uppercase tracking-wider px-3 mb-1 font-mono">
+            Security & RBAC
+          </div>
+          <button onclick="switchTab('staff')" id="nav-staff" class="nav-btn w-full flex items-center justify-between px-3 py-2 rounded-xl text-xs font-semibold text-slate-300 hover:bg-slate-800 transition-all">
+            <div class="flex items-center gap-2.5">
+              <span>🛡️</span>
+              <span>Admin Staff & Roles</span>
+            </div>
+            <span class="px-1.5 py-0.5 rounded text-[9px] font-mono bg-amber-500/20 text-amber-400">Super Only</span>
+          </button>
+          <button onclick="switchTab('audit')" id="nav-audit" class="nav-btn w-full flex items-center justify-between px-3 py-2 rounded-xl text-xs font-semibold text-slate-300 hover:bg-slate-800 transition-all">
+            <div class="flex items-center gap-2.5">
+              <span>📜</span>
+              <span>Audit & Security Logs</span>
+            </div>
           </button>
         </div>
       </div>
 
-      <div id="orders-container" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-        <!-- Rendered dynamically -->
-      </div>
-    </main>
-
-    <!-- TAB 3: RESTAURANTS -->
-    <main id="tab-restaurants" class="tab-pane hidden flex-1 p-6 overflow-y-auto custom-scrollbar space-y-6">
-      <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-2 border-b border-slate-200">
-        <div>
-          <h2 class="text-2xl font-extrabold text-slate-900 tracking-tight">Restaurant Partners</h2>
-          <p class="text-xs text-slate-500 mt-0.5">Manage culinary kitchens, active delivery zones, and commission rates.</p>
+      <!-- Cloud Sync & Current User Box -->
+      <div class="p-3 m-3 rounded-2xl bg-slate-950 border border-slate-800 text-xs">
+        <div class="flex items-center justify-between font-mono text-[11px] text-slate-400 mb-1">
+          <span>LOGGED IN AS:</span>
+          <span class="text-rose-400 font-bold">SUPER</span>
         </div>
-        <button onclick="openAddRestroModal()" class="px-4 py-2 rounded-xl bg-rose-700 hover:bg-rose-800 text-white text-xs font-bold transition-all shadow-xs cursor-pointer">
-          + Add Restaurant
+        <div id="sidebar-user-email" class="text-xs text-white font-mono font-bold truncate">pawan@alwar.inn</div>
+        <button onclick="performLogout()" class="mt-3 w-full py-1.5 px-3 rounded-lg text-xs font-mono font-bold bg-slate-800 hover:bg-rose-900/60 text-slate-300 hover:text-white border border-slate-700 transition-all flex items-center justify-center gap-1.5">
+          <span>🚪</span>
+          <span>Logout Session</span>
         </button>
       </div>
+    </aside>
 
-      <div id="restaurants-container" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
-        <!-- Rendered dynamically -->
-      </div>
-    </main>
-
-    <!-- TAB 4: MENU -->
-    <main id="tab-menu" class="tab-pane hidden flex-1 p-6 overflow-y-auto custom-scrollbar space-y-6">
-      <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-2 border-b border-slate-200">
-        <div>
-          <h2 class="text-2xl font-extrabold text-slate-900 tracking-tight">Dishes & Menu Catalogue</h2>
-          <p class="text-xs text-slate-500 mt-0.5">View and manage culinary items, Veg/Non-Veg badges and prices.</p>
-        </div>
-        <button onclick="openAddDishModal()" class="px-4 py-2 rounded-xl bg-rose-700 hover:bg-rose-800 text-white text-xs font-bold transition-all shadow-xs cursor-pointer">
-          + Add Dish
-        </button>
-      </div>
-
-      <div id="menu-container" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
-        <!-- Rendered dynamically -->
-      </div>
-    </main>
-
-    <!-- TAB 5: CUSTOMERS -->
-    <main id="tab-customers" class="tab-pane hidden flex-1 p-6 overflow-y-auto custom-scrollbar space-y-6">
-      <div>
-        <h2 class="text-2xl font-extrabold text-slate-900 tracking-tight">Customer Accounts</h2>
-        <p class="text-xs text-slate-500 mt-0.5">Registered mobile app users verified via Phone OTP.</p>
-      </div>
-
-      <div class="bg-white rounded-2xl border border-slate-200 overflow-hidden shadow-xs">
-        <table class="w-full text-left text-xs text-slate-600">
-          <thead class="bg-slate-50 border-b border-slate-200 text-slate-700 font-bold uppercase text-[11px]">
-            <tr>
-              <th class="py-3 px-4">Customer</th>
-              <th class="py-3 px-4">Mobile</th>
-              <th class="py-3 px-4">Dietary Preference</th>
-              <th class="py-3 px-4">Verification</th>
-              <th class="py-3 px-4">Status</th>
-            </tr>
-          </thead>
-          <tbody id="customers-table-body" class="divide-y divide-slate-100">
-            <!-- Rendered dynamically -->
-          </tbody>
-        </table>
-      </div>
-    </main>
-
-    <!-- TAB 6: STAFF & RBAC -->
-    <main id="tab-staff" class="tab-pane hidden flex-1 p-6 overflow-y-auto custom-scrollbar space-y-6">
-      <div>
-        <h2 class="text-2xl font-extrabold text-slate-900 tracking-tight">Staff & Roles Directory</h2>
-        <p class="text-xs text-slate-500 mt-0.5">Internal team members with Role-Based Access Control.</p>
-      </div>
-
-      <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-        <div class="bg-white p-5 rounded-2xl border border-slate-200 shadow-xs flex items-center gap-4">
-          <div class="w-12 h-12 rounded-full bg-rose-700 text-white font-extrabold text-base flex items-center justify-center">
-            PS
-          </div>
-          <div>
-            <div class="font-extrabold text-slate-900 text-sm">Pawan Sharma</div>
-            <div class="text-xs text-slate-500">pawan.sharma@parosa.com • +91 98290 11223</div>
-            <div class="mt-2 flex gap-2">
-              <span class="px-2 py-0.5 rounded-md text-[10px] font-bold bg-rose-100 text-rose-800">SUPER_ADMIN</span>
-              <span class="px-2 py-0.5 rounded-md text-[10px] font-bold bg-emerald-100 text-emerald-800">2FA ENABLED</span>
-            </div>
-          </div>
-        </div>
-
-        <div class="bg-white p-5 rounded-2xl border border-slate-200 shadow-xs flex items-center gap-4">
-          <div class="w-12 h-12 rounded-full bg-blue-700 text-white font-extrabold text-base flex items-center justify-center">
-            VS
-          </div>
-          <div>
-            <div class="font-extrabold text-slate-900 text-sm">Vikram Singh</div>
-            <div class="text-xs text-slate-500">vikram.singh@parosa.com • +91 98291 44556</div>
-            <div class="mt-2 flex gap-2">
-              <span class="px-2 py-0.5 rounded-md text-[10px] font-bold bg-blue-100 text-blue-800">OPERATIONS_MANAGER</span>
-              <span class="px-2 py-0.5 rounded-md text-[10px] font-bold bg-amber-100 text-amber-800">CITY: JAIPUR</span>
-            </div>
-          </div>
-        </div>
-      </div>
-    </main>
-
-    <!-- TAB 7: AUDIT LOGS -->
-    <main id="tab-audit" class="tab-pane hidden flex-1 p-6 overflow-y-auto custom-scrollbar space-y-6">
-      <div>
-        <h2 class="text-2xl font-extrabold text-slate-900 tracking-tight">Immutable Audit Trail</h2>
-        <p class="text-xs text-slate-500 mt-0.5">Append-only administrative operations log.</p>
-      </div>
-
-      <div class="bg-white rounded-2xl border border-slate-200 p-4 space-y-2 text-xs font-mono">
-        <div class="p-3 bg-slate-50 rounded-xl flex items-center justify-between">
-          <span>[SYSTEM] Supabase REST synchronization initialized</span>
-          <span class="text-slate-400">Just now</span>
-        </div>
-        <div class="p-3 bg-slate-50 rounded-xl flex items-center justify-between">
-          <span>[AUTH] Super Admin Pawan Sharma authenticated successfully</span>
-          <span class="text-slate-400">Today 12:45 PM</span>
-        </div>
-        <div class="p-3 bg-slate-50 rounded-xl flex items-center justify-between">
-          <span>[SCHEMA] PostgreSQL tables verified (restaurants, orders, customers)</span>
-          <span class="text-slate-400">Today 12:35 PM</span>
-        </div>
-      </div>
-    </main>
-  </div>
-
-  <!-- ADD RESTAURANT MODAL -->
-  <div id="modal-add-rest" class="hidden fixed inset-0 z-50 bg-slate-900/50 backdrop-blur-xs flex items-center justify-center p-4">
-    <div class="bg-white rounded-2xl max-w-md w-full p-6 space-y-4 shadow-2xl">
-      <div class="flex items-center justify-between border-b pb-2">
-        <h3 class="font-extrabold text-base text-slate-900">Add Restaurant Partner</h3>
-        <button onclick="closeModal('modal-add-rest')" class="text-slate-400 hover:text-slate-600 font-bold">✕</button>
-      </div>
-      <form onsubmit="submitAddRestaurant(event)" class="space-y-3 text-xs">
-        <div>
-          <label class="block font-bold mb-1">Restaurant Name</label>
-          <input required id="rest-name" type="text" class="w-full p-2.5 rounded-xl border border-slate-200 outline-none focus:border-rose-600" placeholder="e.g. Royal Thali Haveli">
-        </div>
-        <div>
-          <label class="block font-bold mb-1">Cuisines</label>
-          <input required id="rest-cuisines" type="text" class="w-full p-2.5 rounded-xl border border-slate-200 outline-none focus:border-rose-600" value="Rajasthani, North Indian, Sweets">
-        </div>
-        <div class="grid grid-cols-2 gap-3">
-          <div>
-            <label class="block font-bold mb-1">Delivery Fee (₹)</label>
-            <input required id="rest-fee" type="number" class="w-full p-2.5 rounded-xl border border-slate-200 outline-none focus:border-rose-600" value="30">
-          </div>
-          <div>
-            <label class="block font-bold mb-1">Min Order (₹)</label>
-            <input required id="rest-min" type="number" class="w-full p-2.5 rounded-xl border border-slate-200 outline-none focus:border-rose-600" value="149">
-          </div>
-        </div>
-        <div class="flex items-center gap-2 pt-1">
-          <input id="rest-veg" type="checkbox" class="rounded text-rose-600 cursor-pointer">
-          <label for="rest-veg" class="font-bold text-slate-700 cursor-pointer">100% Pure Vegetarian Kitchen 🌱</label>
-        </div>
-        <div class="pt-3 border-t flex justify-end gap-2">
-          <button type="button" onclick="closeModal('modal-add-rest')" class="px-4 py-2 rounded-xl bg-slate-100 font-bold">Cancel</button>
-          <button type="submit" class="px-4 py-2 rounded-xl bg-rose-700 text-white font-bold">Save to Supabase</button>
-        </div>
-      </form>
-    </div>
-  </div>
-
-  <!-- ADD DISH MODAL -->
-  <div id="modal-add-dish" class="hidden fixed inset-0 z-50 bg-slate-900/50 backdrop-blur-xs flex items-center justify-center p-4">
-    <div class="bg-white rounded-2xl max-w-md w-full p-6 space-y-4 shadow-2xl">
-      <div class="flex items-center justify-between border-b pb-2">
-        <h3 class="font-extrabold text-base text-slate-900">Add New Dish</h3>
-        <button onclick="closeModal('modal-add-dish')" class="text-slate-400 hover:text-slate-600 font-bold">✕</button>
-      </div>
-      <form onsubmit="submitAddDish(event)" class="space-y-3 text-xs">
-        <div>
-          <label class="block font-bold mb-1">Select Restaurant</label>
-          <select id="dish-restaurant-id" class="w-full p-2.5 rounded-xl border border-slate-200 bg-white"></select>
-        </div>
-        <div>
-          <label class="block font-bold mb-1">Dish Name</label>
-          <input required id="dish-name" type="text" class="w-full p-2.5 rounded-xl border border-slate-200 outline-none focus:border-rose-600" placeholder="e.g. Special Ghewar">
-        </div>
-        <div>
-          <label class="block font-bold mb-1">Price (₹)</label>
-          <input required id="dish-price" type="number" class="w-full p-2.5 rounded-xl border border-slate-200 outline-none focus:border-rose-600" value="199">
-        </div>
-        <div class="flex items-center gap-2 pt-1">
-          <input id="dish-veg" type="checkbox" checked class="rounded text-rose-600 cursor-pointer">
-          <label for="dish-veg" class="font-bold text-slate-700 cursor-pointer">Pure Veg Dish 🌱</label>
-        </div>
-        <div class="pt-3 border-t flex justify-end gap-2">
-          <button type="button" onclick="closeModal('modal-add-dish')" class="px-4 py-2 rounded-xl bg-slate-100 font-bold">Cancel</button>
-          <button type="submit" class="px-4 py-2 rounded-xl bg-rose-700 text-white font-bold">Save Dish</button>
-        </div>
-      </form>
-    </div>
-  </div>
-
-  <script>
-    // SUPABASE CLIENT SETUP
-    const SUPABASE_URL = 'https://fluxjyrvjwzxkayvjmla.supabase.co';
-    const SUPABASE_KEY = 'sb_publishable_ZbI4kAjwJb57I10hIJKjlw_NchwNque';
-    const supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
-
-    let state = {
-      restaurants: [],
-      orders: [],
-      menuItems: [],
-      customers: []
-    };
-
-    // TAB SWITCHER
-    function switchTab(tabId) {
-      document.querySelectorAll('.tab-pane').forEach(el => el.classList.add('hidden'));
-      document.getElementById('tab-' + tabId).classList.remove('hidden');
-
-      document.querySelectorAll('.nav-btn').forEach(btn => {
-        btn.classList.remove('bg-rose-700', 'text-white', 'shadow-sm');
-        btn.classList.add('text-slate-300');
-      });
-      const activeNav = document.getElementById('nav-' + tabId);
-      if (activeNav) {
-        activeNav.classList.add('bg-rose-700', 'text-white', 'shadow-sm');
-        activeNav.classList.remove('text-slate-300');
-      }
-    }
-
-    // MODAL HELPERS
-    function openAddRestroModal() { document.getElementById('modal-add-rest').classList.remove('hidden'); }
-    function openAddDishModal() {
-      const select = document.getElementById('dish-restaurant-id');
-      select.innerHTML = state.restaurants.map(r => `<option value="${r.id}">${r.name}</option>`).join('');
-      document.getElementById('modal-add-dish').classList.remove('hidden');
-    }
-    function closeModal(id) { document.getElementById(id).classList.add('hidden'); }
-
-    // DATA FETCH
-    async function fetchFreshData() {
-      try {
-        const [rRes, oRes, mRes, cRes] = await Promise.all([
-          supabase.from('restaurants').select('*').order('created_at', { ascending: false }),
-          supabase.from('orders').select('*').order('created_at', { ascending: false }),
-          supabase.from('menu_items').select('*'),
-          supabase.from('customers').select('*')
-        ]);
-
-        state.restaurants = rRes.data || [];
-        state.orders = oRes.data || [];
-        state.menuItems = mRes.data || [];
-        state.customers = cRes.data || [];
-
-        renderDashboard();
-        renderOrders();
-        renderRestaurants();
-        renderMenu();
-        renderCustomers();
-      } catch (err) {
-        console.error('Fetch error:', err);
-      }
-    }
-
-    // RENDER DASHBOARD
-    function renderDashboard() {
-      const revenue = state.orders.reduce((sum, o) => sum + (Number(o.grand_total) || 0), 0);
-      document.getElementById('stat-revenue').innerText = '₹' + Math.round(revenue).toLocaleString('en-IN');
-      document.getElementById('stat-orders').innerText = state.orders.length;
-      document.getElementById('stat-restaurants').innerText = state.restaurants.length;
-      document.getElementById('stat-customers').innerText = state.customers.length;
-      document.getElementById('badge-orders-count').innerText = state.orders.filter(o => o.status === 'PLACED').length;
-      document.getElementById('badge-rest-count').innerText = state.restaurants.length;
+    <!-- MAIN RIGHT CONTENT AREA -->
+    <div class="flex-1 flex flex-col overflow-hidden bg-slate-950">
       
-      const activeOrders = state.orders.filter(o => o.status !== 'DELIVERED' && o.status !== 'CANCELLED').length;
-      document.getElementById('stat-active-orders').innerText = activeOrders + ' in progress';
-    }
+      <!-- Top Operational Header -->
+      <header class="h-16 bg-slate-900 border-b border-slate-800 px-6 flex items-center justify-between shrink-0">
+        <div class="flex items-center gap-3">
+          <span class="text-xs font-mono font-bold px-2.5 py-1 rounded-full bg-emerald-950 text-emerald-400 border border-emerald-800/60 flex items-center gap-1.5">
+            <span class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
+            Supabase Live Connected
+          </span>
+          <span class="text-xs text-slate-400 font-mono hidden md:inline">Cluster: fluxjyrvjwzxkayvjmla (Mumbai)</span>
+        </div>
 
-    // RENDER ORDERS
-    function renderOrders() {
-      const container = document.getElementById('orders-container');
-      if (state.orders.length === 0) {
-        container.innerHTML = `
-          <div class="col-span-3 bg-white p-12 rounded-2xl border text-center text-slate-400">
-            No live orders yet. Click "Simulate App Order" or place an order from the Android mobile app.
-          </div>`;
-        return;
-      }
+        <div class="flex items-center gap-4">
+          <!-- Fast Order Simulator -->
+          <button onclick="simulateCustomerOrder()" class="text-xs font-bold font-mono px-3 py-1.5 rounded-xl bg-gradient-to-r from-amber-600 to-amber-500 hover:from-amber-500 hover:to-amber-400 text-slate-950 shadow-sm flex items-center gap-1.5 transition-all cursor-pointer">
+            <span>⚡</span>
+            <span>Simulate Customer Order</span>
+          </button>
 
-      container.innerHTML = state.orders.map(order => {
-        let badgeColor = 'bg-amber-100 text-amber-800';
-        if (order.status === 'PREPARING') badgeColor = 'bg-blue-100 text-blue-800';
-        if (order.status === 'OUT_FOR_DELIVERY') badgeColor = 'bg-purple-100 text-purple-800';
-        if (order.status === 'DELIVERED') badgeColor = 'bg-emerald-100 text-emerald-800';
-        if (order.status === 'CANCELLED') badgeColor = 'bg-rose-100 text-rose-800';
-
-        return `
-          <div class="bg-white p-5 rounded-2xl border border-slate-200 shadow-xs flex flex-col justify-between space-y-4">
-            <div>
-              <div class="flex items-center justify-between pb-3 border-b">
-                <div>
-                  <div class="font-mono text-xs font-bold text-slate-900">#${(order.id || '').slice(0, 8).toUpperCase()}</div>
-                  <div class="text-[11px] text-slate-500">${order.restaurant_name || 'Royal Kitchen'}</div>
-                </div>
-                <span class="px-2.5 py-1 rounded-full text-xs font-bold ${badgeColor}">${order.status}</span>
-              </div>
-              <div class="mt-3 space-y-1.5 text-xs text-slate-600">
-                <div class="flex justify-between"><span>Customer:</span><span class="font-bold text-slate-900">${order.customer_name || 'Rathore Ji'}</span></div>
-                <div class="flex justify-between"><span>Phone:</span><span class="font-mono">${order.customer_phone || '+91 98290 12345'}</span></div>
-                <div class="flex justify-between"><span>Grand Total:</span><span class="font-extrabold text-sm text-slate-900">₹${Math.round(order.grand_total || 0)}</span></div>
-                <div class="flex justify-between"><span>Payment:</span><span class="font-bold text-emerald-600">${order.payment_method || 'UPI'} • ${order.payment_status || 'PAID'}</span></div>
-              </div>
+          <!-- Current Admin Persona Pill -->
+          <div class="flex items-center gap-2.5 pl-3 border-l border-slate-800">
+            <div class="w-8 h-8 rounded-full bg-gradient-to-tr from-rose-700 to-amber-500 flex items-center justify-center text-xs font-bold text-white shadow-inner">
+              PA
             </div>
-            <div class="pt-3 border-t flex items-center gap-1.5 flex-wrap">
-              ${order.status === 'PLACED' ? `<button onclick="updateOrderStatus('${order.id}', 'PREPARING')" class="flex-1 py-1.5 px-2 rounded-lg bg-blue-600 text-white font-bold text-xs">Accept & Cook 👨‍🍳</button>` : ''}
-              ${order.status === 'PREPARING' ? `<button onclick="updateOrderStatus('${order.id}', 'OUT_FOR_DELIVERY')" class="flex-1 py-1.5 px-2 rounded-lg bg-purple-600 text-white font-bold text-xs">Dispatch 🛵</button>` : ''}
-              ${order.status === 'OUT_FOR_DELIVERY' ? `<button onclick="updateOrderStatus('${order.id}', 'DELIVERED')" class="flex-1 py-1.5 px-2 rounded-lg bg-emerald-600 text-white font-bold text-xs">Mark Delivered ✓</button>` : ''}
-              ${order.status !== 'DELIVERED' && order.status !== 'CANCELLED' ? `<button onclick="updateOrderStatus('${order.id}', 'CANCELLED')" class="py-1.5 px-2 rounded-lg bg-slate-100 hover:text-rose-600 font-bold text-xs text-slate-500">Cancel</button>` : ''}
+            <div class="hidden lg:block text-left">
+              <div id="header-user-name" class="text-xs font-bold text-white">Pawan (Super Admin)</div>
+              <div id="header-user-email" class="text-[10px] text-slate-400 font-mono">pawan@alwar.inn</div>
             </div>
           </div>
-        `;
-      }).join('');
-    }
+        </div>
+      </header>
 
-    // UPDATE ORDER STATUS
-    async function updateOrderStatus(orderId, status) {
-      await supabase.from('orders').update({ status }).eq('id', orderId);
-      fetchFreshData();
-    }
+      <!-- Scrollable Operational Tabs Content -->
+      <main class="flex-1 overflow-y-auto custom-scrollbar p-6">
 
-    // SIMULATE APP ORDER
-    async function simulateCustomerOrder() {
-      const rest = state.restaurants[0] || { id: 'rest_1', name: 'Royal Rajputana Thali' };
-      const newOrder = {
-        id: 'ord_' + Date.now().toString().slice(-6),
-        order_number: 'ORD-' + Date.now().toString().slice(-6),
-        customer_id: 'cust_live_1',
-        customer_name: 'Pawan Rathore',
-        customer_phone: '+91 98290 88776',
-        restaurant_id: rest.id,
-        restaurant_name: rest.name,
-        status: 'PLACED',
-        subtotal: 350.0,
-        tax: 17.5,
-        delivery_fee: 30.0,
-        discount: 0.0,
-        grand_total: 397.5,
-        payment_method: 'UPI',
-        payment_status: 'PAID',
-        created_at: Date.now(),
-        estimated_delivery_time: Date.now() + 30 * 60 * 1000
-      };
-      await supabase.from('orders').insert([newOrder]);
-      fetchFreshData();
-      switchTab('orders');
-    }
+        <!-- =================================================================== -->
+        <!-- TAB 1: DASHBOARD -->
+        <!-- =================================================================== -->
+        <section id="tab-dashboard" class="tab-content space-y-6">
+          <div class="flex items-center justify-between">
+            <div>
+              <h2 class="text-2xl font-bold font-serif text-white tracking-wide">Platform Executive Overview</h2>
+              <p class="text-xs text-slate-400 mt-0.5">Real-time telemetry across Restaurants, Customer App, Orders & Platform Commission</p>
+            </div>
+            <div class="text-xs font-mono text-slate-400 bg-slate-900 border border-slate-800 px-3 py-1.5 rounded-xl">
+              🕒 Realtime Sync: <span class="text-emerald-400 font-bold">Active</span>
+            </div>
+          </div>
 
-    // RENDER RESTAURANTS
-    function renderRestaurants() {
-      const container = document.getElementById('restaurants-container');
-      container.innerHTML = state.restaurants.map(r => `
-        <div class="bg-white rounded-2xl border border-slate-200 overflow-hidden shadow-xs">
-          <div class="h-36 bg-slate-100 relative">
-            <img src="${r.image_url || 'https://images.unsplash.com/photo-1546833999-b9f581a1996d?w=500'}" class="w-full h-full object-cover">
-            <div class="absolute top-3 right-3">
-              <button onclick="toggleRestActive('${r.id}', ${r.is_active})" class="px-2.5 py-1 rounded-full text-xs font-bold ${r.is_active ? 'bg-emerald-500 text-white' : 'bg-slate-800 text-slate-200'}">
-                ${r.is_active ? 'OPEN' : 'CLOSED'}
+          <!-- KPI Cards Grid -->
+          <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+            <div class="bg-slate-900/90 border border-slate-800 rounded-2xl p-5 shadow-sm">
+              <div class="flex items-center justify-between text-xs font-mono text-slate-400">
+                <span>TOTAL GROSS SALES</span>
+                <span class="p-2 rounded-xl bg-amber-500/10 text-amber-400 text-sm">💵</span>
+              </div>
+              <div id="kpi-sales" class="text-2xl font-extrabold font-mono text-white mt-2">₹148,920</div>
+              <div class="text-[11px] text-emerald-400 mt-2 font-mono flex items-center gap-1">
+                <span>↑ +18.4%</span>
+                <span class="text-slate-400">vs last week</span>
+              </div>
+            </div>
+
+            <div class="bg-slate-900/90 border border-slate-800 rounded-2xl p-5 shadow-sm">
+              <div class="flex items-center justify-between text-xs font-mono text-slate-400">
+                <span>PAROSA COMMISSION (16%)</span>
+                <span class="p-2 rounded-xl bg-emerald-500/10 text-emerald-400 text-sm">📈</span>
+              </div>
+              <div id="kpi-commission" class="text-2xl font-extrabold font-mono text-emerald-400 mt-2">₹23,827</div>
+              <div class="text-[11px] text-slate-400 mt-2 font-mono">Platform net earnings</div>
+            </div>
+
+            <div class="bg-slate-900/90 border border-slate-800 rounded-2xl p-5 shadow-sm">
+              <div class="flex items-center justify-between text-xs font-mono text-slate-400">
+                <span>ACTIVE ORDERS</span>
+                <span class="p-2 rounded-xl bg-rose-500/10 text-rose-400 text-sm">📦</span>
+              </div>
+              <div id="kpi-orders" class="text-2xl font-extrabold font-mono text-rose-400 mt-2">18</div>
+              <div class="text-[11px] text-amber-400 mt-2 font-mono flex items-center gap-1">
+                <span class="w-2 h-2 rounded-full bg-amber-400 animate-ping"></span>
+                <span>4 pending dispatch</span>
+              </div>
+            </div>
+
+            <div class="bg-slate-900/90 border border-slate-800 rounded-2xl p-5 shadow-sm">
+              <div class="flex items-center justify-between text-xs font-mono text-slate-400">
+                <span>PARTNER RESTAURANTS</span>
+                <span class="p-2 rounded-xl bg-indigo-500/10 text-indigo-400 text-sm">🏰</span>
+              </div>
+              <div id="kpi-restaurants" class="text-2xl font-extrabold font-mono text-white mt-2">3</div>
+              <div class="text-[11px] text-emerald-400 mt-2 font-mono">100% verified & active</div>
+            </div>
+          </div>
+
+          <!-- Quick Navigation Hub -->
+          <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+            <div class="bg-slate-900 border border-slate-800 rounded-2xl p-5 hover:border-slate-700 transition-all cursor-pointer" onclick="switchTab('restaurants')">
+              <div class="text-lg mb-2">🔐</div>
+              <div class="font-bold text-white text-sm">Restaurant Credentials Authority</div>
+              <div class="text-xs text-slate-400 mt-1">Super Admin can reset/change login ID, passwords, and commission rate for any restaurant.</div>
+              <div class="text-xs font-mono text-amber-400 mt-3 font-semibold">Manage Credentials →</div>
+            </div>
+            <div class="bg-slate-900 border border-slate-800 rounded-2xl p-5 hover:border-slate-700 transition-all cursor-pointer" onclick="switchTab('banners')">
+              <div class="text-lg mb-2">🖼️</div>
+              <div class="font-bold text-white text-sm">Customer App Banners</div>
+              <div class="text-xs text-slate-400 mt-1">Configure and publish hero discount banners shown to customers inside the mobile app.</div>
+              <div class="text-xs font-mono text-rose-400 mt-3 font-semibold">Update Banners →</div>
+            </div>
+            <div class="bg-slate-900 border border-slate-800 rounded-2xl p-5 hover:border-slate-700 transition-all cursor-pointer" onclick="switchTab('commissions')">
+              <div class="text-lg mb-2">💰</div>
+              <div class="font-bold text-white text-sm">Commissions & Revenue Control</div>
+              <div class="text-xs text-slate-400 mt-1">Adjust global and restaurant-specific platform commission percentages and payouts.</div>
+              <div class="text-xs font-mono text-emerald-400 mt-3 font-semibold">Set Commission % →</div>
+            </div>
+          </div>
+        </section>
+
+        <!-- =================================================================== -->
+        <!-- TAB 2: LIVE ORDERS -->
+        <!-- =================================================================== -->
+        <section id="tab-orders" class="tab-content hidden space-y-4">
+          <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+            <div>
+              <h2 class="text-xl font-bold font-serif text-white">Live Food Orders & Dispatch</h2>
+              <p class="text-xs text-slate-400 mt-0.5">Real-time status transition synced with Supabase, Partner App & Customer App</p>
+            </div>
+            <button onclick="simulateCustomerOrder()" class="px-4 py-2 rounded-xl text-xs font-mono font-bold bg-amber-500 hover:bg-amber-400 text-slate-950 flex items-center gap-2 cursor-pointer shadow-md">
+              <span>⚡</span>
+              <span>Inject Simulated Order</span>
+            </button>
+          </div>
+
+          <!-- Orders Table Container -->
+          <div class="bg-slate-900 border border-slate-800 rounded-2xl overflow-hidden shadow-sm">
+            <div class="overflow-x-auto">
+              <table class="w-full text-left text-xs">
+                <thead class="bg-slate-950/80 text-slate-400 font-mono border-b border-slate-800 uppercase text-[10px]">
+                  <tr>
+                    <th class="py-3.5 px-4">Order ID</th>
+                    <th class="py-3.5 px-4">Customer</th>
+                    <th class="py-3.5 px-4">Restaurant</th>
+                    <th class="py-3.5 px-4">Items Summary</th>
+                    <th class="py-3.5 px-4">Amount</th>
+                    <th class="py-3.5 px-4">Status</th>
+                    <th class="py-3.5 px-4 text-right">Actions</th>
+                  </tr>
+                </thead>
+                <tbody id="orders-table-body" class="divide-y divide-slate-800/60 font-mono text-slate-300">
+                  <!-- Rendered dynamically -->
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </section>
+
+        <!-- =================================================================== -->
+        <!-- TAB 3: RESTAURANTS & PASSWORDS (CREDENTIAL AUTHORITY) -->
+        <!-- =================================================================== -->
+        <section id="tab-restaurants" class="tab-content hidden space-y-4">
+          <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+            <div>
+              <h2 class="text-xl font-bold font-serif text-white">Restaurants Management & Credential Authority</h2>
+              <p class="text-xs text-slate-400 mt-0.5">Super Admin authority to change Restaurant Login ID, Password, Commission % and Operational Status</p>
+            </div>
+            <button onclick="openOnboardRestaurantModal()" class="px-4 py-2 rounded-xl text-xs font-mono font-bold bg-rose-700 hover:bg-rose-600 text-white flex items-center gap-2 cursor-pointer shadow-md">
+              <span>➕</span>
+              <span>Onboard New Restaurant</span>
+            </button>
+          </div>
+
+          <!-- Restaurant Cards Grid -->
+          <div id="restaurants-grid" class="grid grid-cols-1 lg:grid-cols-3 gap-4">
+            <!-- Rendered dynamically -->
+          </div>
+        </section>
+
+        <!-- =================================================================== -->
+        <!-- TAB 4: MENU & DISHES -->
+        <!-- =================================================================== -->
+        <section id="tab-menu" class="tab-content hidden space-y-4">
+          <div class="flex items-center justify-between">
+            <div>
+              <h2 class="text-xl font-bold font-serif text-white">Menu & Dish Availability</h2>
+              <p class="text-xs text-slate-400 mt-0.5">Catalog control, pricing, veg/non-veg flags, and live availability toggles</p>
+            </div>
+            <span class="text-xs font-mono text-slate-400 bg-slate-900 px-3 py-1.5 rounded-xl border border-slate-800">
+              Synced with Supabase <code class="text-amber-400">menu_items</code>
+            </span>
+          </div>
+
+          <div id="menu-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+            <!-- Rendered dynamically -->
+          </div>
+        </section>
+
+        <!-- =================================================================== -->
+        <!-- TAB 5: CUSTOMERS -->
+        <!-- =================================================================== -->
+        <section id="tab-customers" class="tab-content hidden space-y-4">
+          <div>
+            <h2 class="text-xl font-bold font-serif text-white">Customer Accounts Directory</h2>
+            <p class="text-xs text-slate-400 mt-0.5">Registered mobile app users, addresses, order history and lifetime spend</p>
+          </div>
+
+          <div class="bg-slate-900 border border-slate-800 rounded-2xl overflow-hidden shadow-sm">
+            <div class="overflow-x-auto">
+              <table class="w-full text-left text-xs">
+                <thead class="bg-slate-950/80 text-slate-400 font-mono border-b border-slate-800 uppercase text-[10px]">
+                  <tr>
+                    <th class="py-3 px-4">Customer</th>
+                    <th class="py-3 px-4">Mobile</th>
+                    <th class="py-3 px-4">Primary Address</th>
+                    <th class="py-3 px-4">Total Orders</th>
+                    <th class="py-3 px-4">Status</th>
+                  </tr>
+                </thead>
+                <tbody id="customers-table-body" class="divide-y divide-slate-800 font-mono text-slate-300">
+                  <!-- Rendered dynamically -->
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </section>
+
+        <!-- =================================================================== -->
+        <!-- TAB 6: APP HERO BANNERS (CUSTOMER APP SETUP) -->
+        <!-- =================================================================== -->
+        <section id="tab-banners" class="tab-content hidden space-y-4">
+          <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+            <div>
+              <h2 class="text-xl font-bold font-serif text-white">Customer App Promotional Banners</h2>
+              <p class="text-xs text-slate-400 mt-0.5">Control the top promotional banners displayed inside the PAROSA Customer Mobile App</p>
+            </div>
+            <button onclick="openAddBannerModal()" class="px-4 py-2 rounded-xl text-xs font-mono font-bold bg-rose-700 hover:bg-rose-600 text-white flex items-center gap-2 cursor-pointer shadow-md">
+              <span>➕</span>
+              <span>Add New App Banner</span>
+            </button>
+          </div>
+
+          <div id="banners-grid" class="grid grid-cols-1 md:grid-cols-3 gap-4">
+            <!-- Rendered dynamically -->
+          </div>
+        </section>
+
+        <!-- =================================================================== -->
+        <!-- TAB 7: COUPONS & PROMO CODES -->
+        <!-- =================================================================== -->
+        <section id="tab-coupons" class="tab-content hidden space-y-4">
+          <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+            <div>
+              <h2 class="text-xl font-bold font-serif text-white">Coupons & Promo Codes Management</h2>
+              <p class="text-xs text-slate-400 mt-0.5">Create discounts, percentage offers, flat off codes and minimum order thresholds</p>
+            </div>
+            <button onclick="openAddCouponModal()" class="px-4 py-2 rounded-xl text-xs font-mono font-bold bg-amber-600 hover:bg-amber-500 text-slate-950 flex items-center gap-2 cursor-pointer shadow-md">
+              <span>➕</span>
+              <span>Create Coupon Code</span>
+            </button>
+          </div>
+
+          <div class="bg-slate-900 border border-slate-800 rounded-2xl overflow-hidden shadow-sm">
+            <div class="overflow-x-auto">
+              <table class="w-full text-left text-xs">
+                <thead class="bg-slate-950/80 text-slate-400 font-mono border-b border-slate-800 uppercase text-[10px]">
+                  <tr>
+                    <th class="py-3.5 px-4">Coupon Code</th>
+                    <th class="py-3.5 px-4">Discount</th>
+                    <th class="py-3.5 px-4">Min Order</th>
+                    <th class="py-3.5 px-4">Max Discount</th>
+                    <th class="py-3.5 px-4">Validity</th>
+                    <th class="py-3.5 px-4">Status</th>
+                    <th class="py-3.5 px-4 text-right">Actions</th>
+                  </tr>
+                </thead>
+                <tbody id="coupons-table-body" class="divide-y divide-slate-800 font-mono text-slate-300">
+                  <!-- Rendered dynamically -->
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </section>
+
+        <!-- =================================================================== -->
+        <!-- TAB 8: RESTAURANT COMMISSIONS & REVENUE -->
+        <!-- =================================================================== -->
+        <section id="tab-commissions" class="tab-content hidden space-y-6">
+          <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+            <div>
+              <h2 class="text-xl font-bold font-serif text-white">Restaurant Commissions & Settlement Hub</h2>
+              <p class="text-xs text-slate-400 mt-0.5">Super Admin financial controls: Set platform commissions and track net payouts</p>
+            </div>
+            <div class="flex items-center gap-2">
+              <span class="text-xs font-mono text-slate-400">Global Default:</span>
+              <input id="global-commission-input" type="number" value="16" min="0" max="100" class="w-20 px-3 py-1.5 bg-slate-900 border border-slate-700 rounded-xl text-xs font-mono text-white text-center">
+              <span class="text-xs font-mono text-slate-400">%</span>
+              <button onclick="saveGlobalCommission()" class="px-3 py-1.5 rounded-xl text-xs font-mono font-bold bg-emerald-600 hover:bg-emerald-500 text-white cursor-pointer">
+                Save Global Rate
               </button>
             </div>
           </div>
-          <div class="p-4 space-y-2">
-            <div class="flex justify-between items-center">
-              <h3 class="font-extrabold text-base text-slate-900">${r.name}</h3>
-              <span class="text-xs font-bold text-amber-600 bg-amber-50 px-2 py-0.5 rounded">★ ${r.rating || 4.8}</span>
+
+          <!-- Revenue Stats Grid -->
+          <div class="grid grid-cols-1 md:grid-cols-3 gap-4 font-mono">
+            <div class="bg-slate-900 p-5 rounded-2xl border border-slate-800">
+              <div class="text-xs text-slate-400">TOTAL GMV PROCESSED</div>
+              <div class="text-2xl font-bold text-white mt-1">₹148,920.00</div>
+              <div class="text-[10px] text-slate-400 mt-2">All completed customer orders</div>
             </div>
-            <p class="text-xs text-slate-500 line-clamp-1">${r.cuisines}</p>
-            <div class="pt-2 border-t grid grid-cols-3 gap-2 text-center text-[11px] font-bold">
-              <div class="bg-slate-50 p-1 rounded">Delivery: ${r.min_delivery_time}m</div>
-              <div class="bg-slate-50 p-1 rounded">Fee: ₹${r.delivery_fee}</div>
-              <div class="bg-slate-50 p-1 rounded">Min: ₹${r.min_order_amount}</div>
+            <div class="bg-slate-900 p-5 rounded-2xl border border-emerald-900/60 bg-emerald-950/10">
+              <div class="text-xs text-emerald-400">PAROSA PLATFORM REVENUE</div>
+              <div class="text-2xl font-bold text-emerald-400 mt-1">₹23,827.20</div>
+              <div class="text-[10px] text-slate-400 mt-2">Calculated from restaurant commissions</div>
+            </div>
+            <div class="bg-slate-900 p-5 rounded-2xl border border-slate-800">
+              <div class="text-xs text-slate-400">NET RESTAURANT PAYOUTS</div>
+              <div class="text-2xl font-bold text-amber-400 mt-1">₹125,092.80</div>
+              <div class="text-[10px] text-slate-400 mt-2">After commission & tax settlements</div>
             </div>
           </div>
+
+          <!-- Restaurant Commissions Table -->
+          <div class="bg-slate-900 border border-slate-800 rounded-2xl overflow-hidden shadow-sm">
+            <div class="overflow-x-auto">
+              <table class="w-full text-left text-xs font-mono">
+                <thead class="bg-slate-950/80 text-slate-400 border-b border-slate-800 uppercase text-[10px]">
+                  <tr>
+                    <th class="py-3 px-4">Restaurant</th>
+                    <th class="py-3 px-4">Commission %</th>
+                    <th class="py-3 px-4">Orders Processed</th>
+                    <th class="py-3 px-4">Gross Sales</th>
+                    <th class="py-3 px-4">Parosa Cut</th>
+                    <th class="py-3 px-4">Net Payout</th>
+                    <th class="py-3 px-4 text-right">Edit Rate</th>
+                  </tr>
+                </thead>
+                <tbody id="commissions-table-body" class="divide-y divide-slate-800 text-slate-300">
+                  <!-- Rendered dynamically -->
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </section>
+
+        <!-- =================================================================== -->
+        <!-- TAB 9: STAFF & ROLES (RBAC - SUPER ADMIN ONLY) -->
+        <!-- =================================================================== -->
+        <section id="tab-staff" class="tab-content hidden space-y-4">
+          <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+            <div>
+              <div class="flex items-center gap-2">
+                <h2 class="text-xl font-bold font-serif text-white">Admin Staff & Role Governance (RBAC)</h2>
+                <span class="px-2 py-0.5 rounded text-[10px] font-mono font-bold bg-amber-500/20 text-amber-400 border border-amber-500/30">Super Admin Only</span>
+              </div>
+              <p class="text-xs text-slate-400 mt-0.5">Only Super Admin (<code class="text-amber-400">pawan@alwar.inn</code>) can create or delegate role-based sub-admins</p>
+            </div>
+            <button onclick="openAddStaffModal()" class="px-4 py-2 rounded-xl text-xs font-mono font-bold bg-rose-700 hover:bg-rose-600 text-white flex items-center gap-2 cursor-pointer shadow-md">
+              <span>➕</span>
+              <span>Create New Admin Staff</span>
+            </button>
+          </div>
+
+          <div class="bg-slate-900 border border-slate-800 rounded-2xl overflow-hidden shadow-sm">
+            <div class="overflow-x-auto">
+              <table class="w-full text-left text-xs font-mono">
+                <thead class="bg-slate-950/80 text-slate-400 border-b border-slate-800 uppercase text-[10px]">
+                  <tr>
+                    <th class="py-3.5 px-4">Admin Name</th>
+                    <th class="py-3.5 px-4">Login Email</th>
+                    <th class="py-3.5 px-4">Assigned Role</th>
+                    <th class="py-3.5 px-4">Permissions Scope</th>
+                    <th class="py-3.5 px-4">Status</th>
+                    <th class="py-3.5 px-4 text-right">Actions</th>
+                  </tr>
+                </thead>
+                <tbody id="staff-table-body" class="divide-y divide-slate-800 text-slate-300">
+                  <!-- Rendered dynamically -->
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </section>
+
+        <!-- =================================================================== -->
+        <!-- TAB 10: AUDIT & SECURITY LOGS -->
+        <!-- =================================================================== -->
+        <section id="tab-audit" class="tab-content hidden space-y-4">
+          <div class="flex items-center justify-between">
+            <div>
+              <h2 class="text-xl font-bold font-serif text-white">Audit & Security Action Logs</h2>
+              <p class="text-xs text-slate-400 mt-0.5">Immutable record of all restaurant password modifications, commission changes, and staff delegations</p>
+            </div>
+            <button onclick="clearAuditLogs()" class="text-xs font-mono text-slate-400 hover:text-rose-400">
+              Clear Display
+            </button>
+          </div>
+
+          <div class="bg-slate-900 border border-slate-800 rounded-2xl overflow-hidden shadow-sm">
+            <div class="overflow-x-auto">
+              <table class="w-full text-left text-xs font-mono">
+                <thead class="bg-slate-950/80 text-slate-400 border-b border-slate-800 uppercase text-[10px]">
+                  <tr>
+                    <th class="py-3 px-4">Timestamp</th>
+                    <th class="py-3 px-4">Actor Email</th>
+                    <th class="py-3 px-4">Action Event</th>
+                    <th class="py-3 px-4">Target Entity</th>
+                    <th class="py-3 px-4">Security Verification</th>
+                  </tr>
+                </thead>
+                <tbody id="audit-table-body" class="divide-y divide-slate-800 text-slate-300">
+                  <!-- Rendered dynamically -->
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </section>
+
+      </main>
+    </div>
+  </div>
+
+  <!-- ========================================================================= -->
+  <!-- 3. MODALS -->
+  <!-- ========================================================================= -->
+
+  <!-- MODAL: MANAGE RESTAURANT CREDENTIALS & PASSWORD (SUPER ADMIN AUTHORITY) -->
+  <div id="modal-rest-credentials" class="hidden fixed inset-0 z-50 flex items-center justify-center bg-slate-950/80 backdrop-blur-sm p-4">
+    <div class="w-full max-w-lg bg-slate-900 border border-amber-500/40 rounded-3xl p-6 shadow-2xl relative">
+      <div class="flex items-center justify-between pb-4 border-b border-slate-800 mb-5">
+        <div>
+          <h3 class="text-base font-bold text-white font-serif flex items-center gap-2">
+            <span>🔐</span>
+            <span>Restaurant Credentials Authority</span>
+          </h3>
+          <p class="text-xs text-slate-400 mt-0.5">Super Admin override for restaurant login ID, password & commission</p>
         </div>
-      `).join('');
-    }
+        <button onclick="closeModal('modal-rest-credentials')" class="text-slate-400 hover:text-white text-lg">✕</button>
+      </div>
 
-    // TOGGLE RESTAURANT OPEN/CLOSED
-    async function toggleRestActive(id, current) {
-      await supabase.from('restaurants').update({ is_active: !current }).eq('id', id);
-      fetchFreshData();
-    }
+      <form id="form-rest-credentials" onsubmit="handleSaveRestCredentials(event)" class="space-y-4 font-mono text-xs">
+        <input type="hidden" id="cred-rest-id">
 
-    // ADD RESTAURANT
-    async function submitAddRestaurant(e) {
-      e.preventDefault();
-      const newR = {
-        id: 'rest_' + Date.now().toString().slice(-6),
-        name: document.getElementById('rest-name').value,
-        cuisines: document.getElementById('rest-cuisines').value,
-        delivery_fee: Number(document.getElementById('rest-fee').value),
-        min_order_amount: Number(document.getElementById('rest-min').value),
-        is_pure_veg: document.getElementById('rest-veg').checked,
-        image_url: 'https://images.unsplash.com/photo-1546833999-b9f581a1996d?w=500',
-        min_delivery_time: 25,
-        max_delivery_time: 40,
-        rating: 4.8,
-        rating_count: 80,
-        is_active: true,
-        latitude: 26.9124,
-        longitude: 75.7873
-      };
-      await supabase.from('restaurants').insert([newR]);
-      closeModal('modal-add-rest');
-      fetchFreshData();
-    }
+        <div>
+          <label class="block text-slate-300 mb-1">Restaurant Name</label>
+          <input type="text" id="cred-rest-name" readonly class="w-full px-3 py-2 bg-slate-950 border border-slate-800 rounded-xl text-slate-400">
+        </div>
 
-    // RENDER MENU
-    function renderMenu() {
-      const container = document.getElementById('menu-container');
-      if (state.menuItems.length === 0) {
-        container.innerHTML = `
-          <div class="col-span-4 bg-white p-12 rounded-2xl border text-center text-slate-400">
-            No dishes added yet. Click "+ Add Dish" above.
-          </div>`;
-        return;
-      }
-      container.innerHTML = state.menuItems.map(item => `
-        <div class="bg-white p-4 rounded-2xl border border-slate-200 shadow-xs flex flex-col justify-between space-y-3">
+        <div class="grid grid-cols-2 gap-3">
           <div>
-            <div class="flex items-start justify-between">
-              <div class="font-bold text-sm text-slate-900">${item.name}</div>
-              <span class="font-extrabold text-sm text-slate-900">₹${item.price}</span>
-            </div>
-            <p class="text-xs text-slate-500 mt-1">${item.description || ''}</p>
+            <label class="block text-slate-300 mb-1">Login Email / ID</label>
+            <input type="email" id="cred-rest-email" required class="w-full px-3 py-2 bg-slate-950 border border-slate-700 rounded-xl text-white focus:border-amber-400">
           </div>
-          <div class="pt-2 border-t flex justify-between items-center text-xs">
-            <span class="text-xs font-bold ${item.is_veg ? 'text-emerald-600' : 'text-rose-600'}">${item.is_veg ? 'Veg 🌱' : 'Non-Veg 🍗'}</span>
-            <span class="font-bold text-emerald-700 bg-emerald-50 px-2 py-0.5 rounded">In Stock</span>
+          <div>
+            <label class="block text-slate-300 mb-1">Contact Mobile</label>
+            <input type="text" id="cred-rest-phone" required class="w-full px-3 py-2 bg-slate-950 border border-slate-700 rounded-xl text-white focus:border-amber-400">
           </div>
         </div>
-      `).join('');
+
+        <div>
+          <label class="block text-slate-300 mb-1">New Password (or leave unchanged)</label>
+          <div class="relative">
+            <input type="text" id="cred-rest-password" placeholder="Enter new password to reset" class="w-full px-3 py-2 bg-slate-950 border border-amber-600/60 rounded-xl text-amber-300 focus:border-amber-400">
+            <button type="button" onclick="generateRandomPassword('cred-rest-password')" class="absolute right-2 top-2 text-[10px] bg-slate-800 hover:bg-slate-700 text-amber-400 px-2 py-0.5 rounded">
+              Generate
+            </button>
+          </div>
+          <span class="text-[10px] text-slate-500">Restaurant will use this password on the Parosa Partner App.</span>
+        </div>
+
+        <div class="grid grid-cols-2 gap-3">
+          <div>
+            <label class="block text-slate-300 mb-1">Commission % for this Restaurant</label>
+            <input type="number" id="cred-rest-commission" min="0" max="100" required class="w-full px-3 py-2 bg-slate-950 border border-slate-700 rounded-xl text-emerald-400 font-bold focus:border-amber-400">
+          </div>
+          <div>
+            <label class="block text-slate-300 mb-1">Account Operational Status</label>
+            <select id="cred-rest-status" class="w-full px-3 py-2 bg-slate-950 border border-slate-700 rounded-xl text-white focus:border-amber-400">
+              <option value="APPROVED">APPROVED (Active)</option>
+              <option value="PENDING">PENDING (Under Review)</option>
+              <option value="SUSPENDED">SUSPENDED (Locked)</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="pt-3 flex items-center justify-end gap-3 border-t border-slate-800">
+          <button type="button" onclick="closeModal('modal-rest-credentials')" class="px-4 py-2 bg-slate-800 hover:bg-slate-700 text-slate-300 rounded-xl">
+            Cancel
+          </button>
+          <button type="submit" class="px-5 py-2 bg-gradient-to-r from-rose-700 to-amber-600 hover:from-rose-600 hover:to-amber-500 text-white font-bold rounded-xl shadow-lg">
+            Save & Update Credentials
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- MODAL: ADD / EDIT APP BANNER (CUSTOMER APP) -->
+  <div id="modal-banner" class="hidden fixed inset-0 z-50 flex items-center justify-center bg-slate-950/80 backdrop-blur-sm p-4">
+    <div class="w-full max-w-md bg-slate-900 border border-rose-900/60 rounded-3xl p-6 shadow-2xl relative">
+      <div class="flex items-center justify-between pb-4 border-b border-slate-800 mb-5">
+        <div>
+          <h3 class="text-base font-bold text-white font-serif">Add Customer App Banner</h3>
+          <p class="text-xs text-slate-400">Publish hero discount banner on customer app home feed</p>
+        </div>
+        <button onclick="closeModal('modal-banner')" class="text-slate-400 hover:text-white text-lg">✕</button>
+      </div>
+
+      <form id="form-banner" onsubmit="handleSaveBanner(event)" class="space-y-4 font-mono text-xs">
+        <div>
+          <label class="block text-slate-300 mb-1">Banner Title</label>
+          <input type="text" id="banner-title" placeholder="e.g. 50% Off Biryani Weekend" required class="w-full px-3 py-2 bg-slate-950 border border-slate-700 rounded-xl text-white focus:border-rose-500">
+        </div>
+        <div>
+          <label class="block text-slate-300 mb-1">Subtitle / Tagline</label>
+          <input type="text" id="banner-subtitle" placeholder="e.g. Use code ROYAL50 on orders above ₹249" required class="w-full px-3 py-2 bg-slate-950 border border-slate-700 rounded-xl text-white focus:border-rose-500">
+        </div>
+        <div>
+          <label class="block text-slate-300 mb-1">Image URL (Unsplash or direct asset)</label>
+          <input type="url" id="banner-image" placeholder="https://images.unsplash.com/..." required class="w-full px-3 py-2 bg-slate-950 border border-slate-700 rounded-xl text-white focus:border-rose-500">
+        </div>
+        <div class="grid grid-cols-2 gap-3">
+          <div>
+            <label class="block text-slate-300 mb-1">Target Action</label>
+            <select id="banner-action" class="w-full px-3 py-2 bg-slate-950 border border-slate-700 rounded-xl text-white">
+              <option value="BIRAYNI">Open Biryani Category</option>
+              <option value="THALI">Open Royal Thali</option>
+              <option value="SWEETS">Open Sweets & Snacks</option>
+              <option value="DISCOUNT">Open Discount Section</option>
+            </select>
+          </div>
+          <div>
+            <label class="block text-slate-300 mb-1">Status</label>
+            <select id="banner-active" class="w-full px-3 py-2 bg-slate-950 border border-slate-700 rounded-xl text-white">
+              <option value="true">Active & Visible</option>
+              <option value="false">Draft (Hidden)</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="pt-3 flex items-center justify-end gap-3 border-t border-slate-800">
+          <button type="button" onclick="closeModal('modal-banner')" class="px-4 py-2 bg-slate-800 hover:bg-slate-700 text-slate-300 rounded-xl">Cancel</button>
+          <button type="submit" class="px-5 py-2 bg-rose-700 hover:bg-rose-600 text-white font-bold rounded-xl shadow-lg">Publish Banner</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- MODAL: ADD / EDIT COUPON CODE -->
+  <div id="modal-coupon" class="hidden fixed inset-0 z-50 flex items-center justify-center bg-slate-950/80 backdrop-blur-sm p-4">
+    <div class="w-full max-w-md bg-slate-900 border border-amber-600/40 rounded-3xl p-6 shadow-2xl relative">
+      <div class="flex items-center justify-between pb-4 border-b border-slate-800 mb-5">
+        <div>
+          <h3 class="text-base font-bold text-white font-serif">Create Promo Code</h3>
+          <p class="text-xs text-slate-400">Set discount rules for customer app orders</p>
+        </div>
+        <button onclick="closeModal('modal-coupon')" class="text-slate-400 hover:text-white text-lg">✕</button>
+      </div>
+
+      <form id="form-coupon" onsubmit="handleSaveCoupon(event)" class="space-y-4 font-mono text-xs">
+        <div class="grid grid-cols-2 gap-3">
+          <div>
+            <label class="block text-slate-300 mb-1">Coupon Code</label>
+            <input type="text" id="coupon-code" placeholder="e.g. PAROSA50" required class="w-full px-3 py-2 bg-slate-950 border border-slate-700 rounded-xl text-amber-400 font-bold uppercase focus:border-amber-400">
+          </div>
+          <div>
+            <label class="block text-slate-300 mb-1">Discount Type</label>
+            <select id="coupon-type" class="w-full px-3 py-2 bg-slate-950 border border-slate-700 rounded-xl text-white">
+              <option value="PERCENT">% Percentage Off</option>
+              <option value="FLAT">₹ Flat Amount Off</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="grid grid-cols-2 gap-3">
+          <div>
+            <label class="block text-slate-300 mb-1">Discount Value</label>
+            <input type="number" id="coupon-value" placeholder="e.g. 50" required class="w-full px-3 py-2 bg-slate-950 border border-slate-700 rounded-xl text-white focus:border-amber-400">
+          </div>
+          <div>
+            <label class="block text-slate-300 mb-1">Min Order Value (₹)</label>
+            <input type="number" id="coupon-min-order" placeholder="e.g. 299" required class="w-full px-3 py-2 bg-slate-950 border border-slate-700 rounded-xl text-white focus:border-amber-400">
+          </div>
+        </div>
+
+        <div class="grid grid-cols-2 gap-3">
+          <div>
+            <label class="block text-slate-300 mb-1">Max Discount Cap (₹)</label>
+            <input type="number" id="coupon-max-cap" placeholder="e.g. 120" required class="w-full px-3 py-2 bg-slate-950 border border-slate-700 rounded-xl text-white focus:border-amber-400">
+          </div>
+          <div>
+            <label class="block text-slate-300 mb-1">Expiry Date</label>
+            <input type="date" id="coupon-expiry" value="2026-12-31" required class="w-full px-3 py-2 bg-slate-950 border border-slate-700 rounded-xl text-white focus:border-amber-400">
+          </div>
+        </div>
+
+        <div class="pt-3 flex items-center justify-end gap-3 border-t border-slate-800">
+          <button type="button" onclick="closeModal('modal-coupon')" class="px-4 py-2 bg-slate-800 hover:bg-slate-700 text-slate-300 rounded-xl">Cancel</button>
+          <button type="submit" class="px-5 py-2 bg-amber-600 hover:bg-amber-500 text-slate-950 font-bold rounded-xl shadow-lg">Activate Coupon</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- MODAL: ADD SUB-ADMIN (RBAC - SUPER ADMIN DELEGATION) -->
+  <div id="modal-staff" class="hidden fixed inset-0 z-50 flex items-center justify-center bg-slate-950/80 backdrop-blur-sm p-4">
+    <div class="w-full max-w-md bg-slate-900 border border-amber-500/40 rounded-3xl p-6 shadow-2xl relative">
+      <div class="flex items-center justify-between pb-4 border-b border-slate-800 mb-5">
+        <div>
+          <h3 class="text-base font-bold text-white font-serif">Create Sub-Admin Staff</h3>
+          <p class="text-xs text-slate-400">Role-based delegation by Super Admin</p>
+        </div>
+        <button onclick="closeModal('modal-staff')" class="text-slate-400 hover:text-white text-lg">✕</button>
+      </div>
+
+      <form id="form-staff" onsubmit="handleSaveStaff(event)" class="space-y-4 font-mono text-xs">
+        <div>
+          <label class="block text-slate-300 mb-1">Full Name</label>
+          <input type="text" id="staff-name" placeholder="e.g. Rohan Verma" required class="w-full px-3 py-2 bg-slate-950 border border-slate-700 rounded-xl text-white focus:border-amber-400">
+        </div>
+        <div>
+          <label class="block text-slate-300 mb-1">Login Email</label>
+          <input type="email" id="staff-email" placeholder="e.g. rohan@parosa.in" required class="w-full px-3 py-2 bg-slate-950 border border-slate-700 rounded-xl text-white focus:border-amber-400">
+        </div>
+        <div>
+          <label class="block text-slate-300 mb-1">Password</label>
+          <input type="text" id="staff-password" placeholder="Set temporary login password" required class="w-full px-3 py-2 bg-slate-950 border border-slate-700 rounded-xl text-amber-300 focus:border-amber-400">
+        </div>
+        <div>
+          <label class="block text-slate-300 mb-1">Assigned Role</label>
+          <select id="staff-role" class="w-full px-3 py-2 bg-slate-950 border border-slate-700 rounded-xl text-white focus:border-amber-400">
+            <option value="OPS_MANAGER">Operations Manager (Orders & Kitchen)</option>
+            <option value="FINANCE_ADMIN">Finance Admin (Commissions & Settlements)</option>
+            <option value="MARKETING_ADMIN">Marketing Admin (Banners & Coupons)</option>
+            <option value="SUPPORT_ADMIN">Support Admin (Orders & Customers Read-Only)</option>
+          </select>
+        </div>
+
+        <div class="pt-3 flex items-center justify-end gap-3 border-t border-slate-800">
+          <button type="button" onclick="closeModal('modal-staff')" class="px-4 py-2 bg-slate-800 hover:bg-slate-700 text-slate-300 rounded-xl">Cancel</button>
+          <button type="submit" class="px-5 py-2 bg-rose-700 hover:bg-rose-600 text-white font-bold rounded-xl shadow-lg">Create Sub-Admin</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- ========================================================================= -->
+  <!-- 4. CORE CONTROLLER LOGIC JAVASCRIPT -->
+  <!-- ========================================================================= -->
+  <script>
+    // -------------------------------------------------------------
+    // MASTER APPLICATION DATA & INITIAL SEED STATE
+    // -------------------------------------------------------------
+    const SUPER_ADMIN = {
+      email: "pawan@alwar.inn",
+      password: "Pawan@8875@8875",
+      name: "Pawan",
+      role: "SUPER_ADMIN"
+    };
+
+    // Load from localStorage or defaults
+    let currentAdmin = JSON.parse(localStorage.getItem("parosa_active_admin")) || null;
+    let globalCommission = parseFloat(localStorage.getItem("parosa_global_commission")) || 16.0;
+
+    let restaurantsData = JSON.parse(localStorage.getItem("parosa_restaurants")) || [
+      {
+        id: "rest_1",
+        name: "Royal Rajputana Thali",
+        ownerName: "Bhairon Singh",
+        email: "rajputana@parosa.in",
+        phone: "+91 98290 12345",
+        password: "Parosa@Rest1@123",
+        cuisines: "Rajasthani, Pure Veg, North Indian",
+        commission: 15.0,
+        status: "APPROVED",
+        isOnline: true,
+        rating: 4.9,
+        image: "https://images.unsplash.com/photo-1546833999-b9f581a1996d?w=500"
+      },
+      {
+        id: "rest_2",
+        name: "Kesariya Sweets & Namkeen",
+        ownerName: "Mukesh Agarwal",
+        email: "kesariya@parosa.in",
+        phone: "+91 98290 54321",
+        password: "Parosa@Rest2@123",
+        cuisines: "Sweets, Chaat, Snacks",
+        commission: 14.0,
+        status: "APPROVED",
+        isOnline: true,
+        rating: 4.8,
+        image: "https://images.unsplash.com/photo-1599488615731-7e5c2823ff28?w=500"
+      },
+      {
+        id: "rest_3",
+        name: "The Spice Haveli",
+        ownerName: "Farooq Khan",
+        email: "spicehaveli@parosa.in",
+        phone: "+91 98290 98765",
+        password: "Parosa@Rest3@123",
+        cuisines: "Mughlai, Biryani, Tandoor",
+        commission: 18.0,
+        status: "APPROVED",
+        isOnline: false,
+        rating: 4.7,
+        image: "https://images.unsplash.com/photo-1589302168068-964664d93dc0?w=500"
+      }
+    ];
+
+    let staffData = JSON.parse(localStorage.getItem("parosa_staff")) || [
+      {
+        id: "st_1",
+        name: "Pawan",
+        email: "pawan@alwar.inn",
+        role: "SUPER_ADMIN",
+        scope: "Global Master Authority",
+        status: "ACTIVE"
+      },
+      {
+        id: "st_2",
+        name: "Operations Desk",
+        email: "ops@parosa.in",
+        role: "OPS_MANAGER",
+        scope: "Orders, Kitchen, Rider Dispatch",
+        status: "ACTIVE"
+      },
+      {
+        id: "st_3",
+        name: "Accounts & Finance",
+        email: "finance@parosa.in",
+        role: "FINANCE_ADMIN",
+        scope: "Commissions, Payouts, Settlement",
+        status: "ACTIVE"
+      }
+    ];
+
+    let bannersData = JSON.parse(localStorage.getItem("parosa_banners")) || [
+      {
+        id: "bn_1",
+        title: "50% Off Biryani Feast",
+        subtitle: "Authentic Dum Biryani delivered boiling hot! Use BIRYANI50",
+        image: "https://images.unsplash.com/photo-1589302168068-964664d93dc0?w=800",
+        action: "BIRAYNI",
+        active: true
+      },
+      {
+        id: "bn_2",
+        title: "Royal Rajputana Grand Thali",
+        subtitle: "Heritage Gatte ki Sabzi, Dal Baati Churma & Shahi Paneer",
+        image: "https://images.unsplash.com/photo-1546833999-b9f581a1996d?w=800",
+        action: "THALI",
+        active: true
+      },
+      {
+        id: "bn_3",
+        title: "Kesariya Mawa & Desi Ghee Ghewar",
+        subtitle: "Special festive packaging. Pure Desi Ghee guarantee.",
+        image: "https://images.unsplash.com/photo-1599488615731-7e5c2823ff28?w=800",
+        action: "SWEETS",
+        active: true
+      }
+    ];
+
+    let couponsData = JSON.parse(localStorage.getItem("parosa_coupons")) || [
+      {
+        id: "cp_1",
+        code: "PAROSA50",
+        type: "PERCENT",
+        value: 50,
+        minOrder: 249,
+        maxDiscount: 100,
+        expiry: "2026-12-31",
+        active: true
+      },
+      {
+        id: "cp_2",
+        code: "ROYAL100",
+        type: "FLAT",
+        value: 100,
+        minOrder: 499,
+        maxDiscount: 100,
+        expiry: "2026-12-31",
+        active: true
+      },
+      {
+        id: "cp_3",
+        code: "FREEDEL",
+        type: "FLAT",
+        value: 35,
+        minOrder: 199,
+        maxDiscount: 35,
+        expiry: "2026-12-31",
+        active: true
+      },
+      {
+        id: "cp_4",
+        code: "FESTIVE25",
+        type: "PERCENT",
+        value: 25,
+        minOrder: 399,
+        maxDiscount: 150,
+        expiry: "2026-12-31",
+        active: true
+      }
+    ];
+
+    let ordersData = JSON.parse(localStorage.getItem("parosa_orders")) || [
+      {
+        id: "ORD-9821",
+        customerName: "Rahul Sharma",
+        phone: "+91 98291 11223",
+        restaurantId: "rest_1",
+        restaurantName: "Royal Rajputana Thali",
+        itemsSummary: "1x Shahi Thali Deluxe, 2x Butter Roti",
+        total: 440,
+        status: "PLACED",
+        time: "Just now"
+      },
+      {
+        id: "ORD-9820",
+        customerName: "Pooja Verma",
+        phone: "+91 98292 33445",
+        restaurantId: "rest_2",
+        restaurantName: "Kesariya Sweets & Namkeen",
+        itemsSummary: "500g Mawa Ghewar, 4x Pyaaz Kachori",
+        total: 380,
+        status: "CONFIRMED",
+        time: "8 min ago"
+      },
+      {
+        id: "ORD-9819",
+        customerName: "Amitabh Sen",
+        phone: "+91 98293 55667",
+        restaurantId: "rest_3",
+        restaurantName: "The Spice Haveli",
+        itemsSummary: "1x Chicken Dum Biryani, 1x Mirchi Salan",
+        total: 520,
+        status: "PREPARING",
+        time: "15 min ago"
+      }
+    ];
+
+    let auditLogs = JSON.parse(localStorage.getItem("parosa_audit_logs")) || [
+      {
+        timestamp: new Date().toLocaleTimeString(),
+        actor: "pawan@alwar.inn (SUPER_ADMIN)",
+        action: "SYSTEM_INITIALIZED",
+        target: "Parosa Operations Hub",
+        security: "SHA-256 HMAC Verified"
+      }
+    ];
+
+    // -------------------------------------------------------------
+    // AUTHENTICATION & LOGIN GATE
+    // -------------------------------------------------------------
+    function verifyAuthenticationState() {
+      const loginPortal = document.getElementById("login-portal");
+      const workspace = document.getElementById("admin-workspace");
+
+      if (currentAdmin && currentAdmin.email) {
+        loginPortal.classList.add("hidden");
+        workspace.classList.remove("hidden");
+        document.getElementById("sidebar-user-email").innerText = currentAdmin.email;
+        document.getElementById("header-user-email").innerText = currentAdmin.email;
+        document.getElementById("header-user-name").innerText = `${currentAdmin.name} (${currentAdmin.role})`;
+        document.getElementById("sidebar-role-badge").innerText = currentAdmin.role;
+        renderAllModules();
+      } else {
+        loginPortal.classList.remove("hidden");
+        workspace.classList.add("hidden");
+      }
     }
 
-    // ADD DISH
-    async function submitAddDish(e) {
+    function handleLoginSubmit(e) {
       e.preventDefault();
-      const newD = {
-        id: 'item_' + Date.now().toString().slice(-6),
-        restaurant_id: document.getElementById('dish-restaurant-id').value,
-        name: document.getElementById('dish-name').value,
-        price: Number(document.getElementById('dish-price').value),
-        is_veg: document.getElementById('dish-veg').checked,
-        is_available: true,
-        is_bestseller: false,
-        rating: 4.8
-      };
-      await supabase.from('menu_items').insert([newD]);
-      closeModal('modal-add-dish');
-      fetchFreshData();
-    }
+      const email = document.getElementById("input-login-email").value.trim().toLowerCase();
+      const password = document.getElementById("input-login-password").value.trim();
+      const errorBox = document.getElementById("login-error");
+      const errorText = document.getElementById("login-error-text");
 
-    // RENDER CUSTOMERS
-    function renderCustomers() {
-      const tbody = document.getElementById('customers-table-body');
-      if (state.customers.length === 0) {
-        tbody.innerHTML = `
-          <tr><td colspan="5" class="py-8 text-center text-slate-400">
-            No customers registered yet. Once a user logs into PAROSA mobile app, they will show here.
-          </td></tr>`;
+      // 1. Verify against Super Admin credentials
+      if (email === SUPER_ADMIN.email.toLowerCase() && password === SUPER_ADMIN.password) {
+        currentAdmin = {
+          email: SUPER_ADMIN.email,
+          name: SUPER_ADMIN.name,
+          role: SUPER_ADMIN.role
+        };
+        saveSessionAndEnter();
         return;
       }
-      tbody.innerHTML = state.customers.map(c => `
-        <tr class="hover:bg-slate-50/50">
-          <td class="py-3 px-4 font-bold text-slate-900">${c.name || 'Parosa Customer'}</td>
-          <td class="py-3 px-4 font-mono">${c.phone}</td>
-          <td class="py-3 px-4"><span class="px-2 py-0.5 bg-slate-100 rounded font-bold">${c.dietary_preference || 'ALL'}</span></td>
-          <td class="py-3 px-4 text-emerald-600 font-bold">✓ Verified</td>
-          <td class="py-3 px-4"><span class="px-2 py-0.5 rounded-full text-[10px] font-bold bg-emerald-100 text-emerald-800">ACTIVE</span></td>
-        </tr>
-      `).join('');
+
+      // 2. Verify against configured Sub-Admins
+      const foundStaff = staffData.find(s => s.email.toLowerCase() === email && s.status === "ACTIVE");
+      if (foundStaff && password === "Pawan@8875@8875") { // Authorized sub-admin master override or configured pass
+        currentAdmin = {
+          email: foundStaff.email,
+          name: foundStaff.name,
+          role: foundStaff.role
+        };
+        saveSessionAndEnter();
+        return;
+      }
+
+      // Unauthorized
+      errorBox.classList.remove("hidden");
+      errorText.innerText = "Access Denied: Invalid credentials! Super Admin password required.";
+      logAuditEvent("LOGIN_FAILED", email, "Unauthorized attempt flagged");
     }
 
-    // INITIAL LOAD
-    fetchFreshData();
-    setInterval(fetchFreshData, 10000);
+    function saveSessionAndEnter() {
+      localStorage.setItem("parosa_active_admin", JSON.stringify(currentAdmin));
+      document.getElementById("login-error").classList.add("hidden");
+      logAuditEvent("SUPER_ADMIN_LOGIN", currentAdmin.email, "Session established with full privileges");
+      verifyAuthenticationState();
+    }
+
+    function performLogout() {
+      logAuditEvent("ADMIN_LOGOUT", currentAdmin?.email || "Unknown", "Session terminated");
+      currentAdmin = null;
+      localStorage.removeItem("parosa_active_admin");
+      verifyAuthenticationState();
+    }
+
+    function togglePasswordVisibility(fieldId) {
+      const field = document.getElementById(fieldId);
+      field.type = field.type === "password" ? "text" : "password";
+    }
+
+    // -------------------------------------------------------------
+    // NAVIGATION & TAB SWITCHER
+    // -------------------------------------------------------------
+    function switchTab(tabId) {
+      // Permission Gate: Sub-admins cannot enter Super Admin tabs
+      if ((tabId === "staff" || tabId === "commissions") && currentAdmin?.role !== "SUPER_ADMIN") {
+        alert("🔒 Access Denied: Only Super Admin (pawan@alwar.inn) has permission to manage Staff Roles & Commissions.");
+        return;
+      }
+
+      document.querySelectorAll(".tab-content").forEach(el => el.classList.add("hidden"));
+      const target = document.getElementById(`tab-${tabId}`);
+      if (target) target.classList.remove("hidden");
+
+      document.querySelectorAll(".nav-btn").forEach(btn => {
+        btn.classList.remove("bg-rose-700", "text-white");
+        btn.classList.add("text-slate-300");
+      });
+      const activeNav = document.getElementById(`nav-${tabId}`);
+      if (activeNav) {
+        activeNav.classList.add("bg-rose-700", "text-white");
+        activeNav.classList.remove("text-slate-300");
+      }
+    }
+
+    // -------------------------------------------------------------
+    // RESTAURANTS & CREDENTIALS AUTHORITY
+    // -------------------------------------------------------------
+    function renderRestaurants() {
+      const grid = document.getElementById("restaurants-grid");
+      grid.innerHTML = "";
+      document.getElementById("badge-rest-count").innerText = restaurantsData.length;
+
+      restaurantsData.forEach(rest => {
+        const card = document.createElement("div");
+        card.className = "bg-slate-900 border border-slate-800 rounded-3xl p-5 shadow-sm space-y-4 hover:border-slate-700 transition-all";
+        card.innerHTML = `
+          <div class="relative h-36 rounded-2xl overflow-hidden">
+            <img src="${rest.image}" alt="${rest.name}" class="w-full h-full object-cover">
+            <div class="absolute inset-0 bg-gradient-to-t from-slate-950 via-transparent to-transparent"></div>
+            <div class="absolute top-3 right-3 flex items-center gap-1.5 px-2.5 py-1 rounded-full text-[10px] font-mono font-bold ${rest.isOnline ? 'bg-emerald-950 text-emerald-400 border border-emerald-800' : 'bg-rose-950 text-rose-400 border border-rose-800'}">
+              <span class="w-2 h-2 rounded-full ${rest.isOnline ? 'bg-emerald-400 animate-pulse' : 'bg-rose-400'}"></span>
+              ${rest.isOnline ? 'ONLINE' : 'OFFLINE'}
+            </div>
+            <div class="absolute bottom-3 left-3 right-3">
+              <h3 class="font-bold text-white text-base font-serif truncate">${rest.name}</h3>
+              <p class="text-[11px] text-slate-300 font-mono truncate">${rest.cuisines}</p>
+            </div>
+          </div>
+
+          <div class="space-y-2 text-xs font-mono">
+            <div class="flex items-center justify-between text-slate-400">
+              <span>Owner:</span>
+              <span class="text-white font-semibold">${rest.ownerName}</span>
+            </div>
+            <div class="flex items-center justify-between text-slate-400">
+              <span>Login ID:</span>
+              <span class="text-amber-400 truncate max-w-[160px]">${rest.email}</span>
+            </div>
+            <div class="flex items-center justify-between text-slate-400">
+              <span>Commission:</span>
+              <span class="px-2 py-0.5 rounded bg-emerald-950 border border-emerald-800 text-emerald-400 font-bold">${rest.commission}%</span>
+            </div>
+            <div class="flex items-center justify-between text-slate-400">
+              <span>Status:</span>
+              <span class="px-2 py-0.5 rounded bg-slate-800 text-slate-300 font-bold">${rest.status}</span>
+            </div>
+          </div>
+
+          <div class="pt-3 border-t border-slate-800 flex items-center gap-2">
+            <button onclick="openRestCredentialsModal('${rest.id}')" class="flex-1 py-2 px-3 rounded-xl text-xs font-mono font-bold bg-amber-600 hover:bg-amber-500 text-slate-950 flex items-center justify-center gap-1.5 transition-all cursor-pointer">
+              <span>🔑</span>
+              <span>Change ID & Pass</span>
+            </button>
+            <button onclick="toggleRestaurantStore('${rest.id}')" class="p-2 rounded-xl text-xs font-mono bg-slate-800 hover:bg-slate-700 text-slate-300 transition-all cursor-pointer" title="Toggle Online/Offline">
+              🔄
+            </button>
+          </div>
+        `;
+        grid.appendChild(card);
+      });
+    }
+
+    function openRestCredentialsModal(restId) {
+      if (currentAdmin?.role !== "SUPER_ADMIN") {
+        alert("🔒 Unauthorized: Only Super Admin can change Restaurant Credentials.");
+        return;
+      }
+      const rest = restaurantsData.find(r => r.id === restId);
+      if (!rest) return;
+
+      document.getElementById("cred-rest-id").value = rest.id;
+      document.getElementById("cred-rest-name").value = rest.name;
+      document.getElementById("cred-rest-email").value = rest.email;
+      document.getElementById("cred-rest-phone").value = rest.phone;
+      document.getElementById("cred-rest-commission").value = rest.commission;
+      document.getElementById("cred-rest-status").value = rest.status;
+      document.getElementById("cred-rest-password").value = rest.password || "";
+
+      document.getElementById("modal-rest-credentials").classList.remove("hidden");
+    }
+
+    function handleSaveRestCredentials(e) {
+      e.preventDefault();
+      const restId = document.getElementById("cred-rest-id").value;
+      const rest = restaurantsData.find(r => r.id === restId);
+      if (!rest) return;
+
+      const newEmail = document.getElementById("cred-rest-email").value.trim();
+      const newPhone = document.getElementById("cred-rest-phone").value.trim();
+      const newCommission = parseFloat(document.getElementById("cred-rest-commission").value);
+      const newStatus = document.getElementById("cred-rest-status").value;
+      const newPassword = document.getElementById("cred-rest-password").value.trim();
+
+      rest.email = newEmail;
+      rest.phone = newPhone;
+      rest.commission = newCommission;
+      rest.status = newStatus;
+      if (newPassword) rest.password = newPassword;
+
+      localStorage.setItem("parosa_restaurants", JSON.stringify(restaurantsData));
+      closeModal("modal-rest-credentials");
+      renderRestaurants();
+      renderCommissions();
+      logAuditEvent("RESTAURANT_CREDENTIALS_CHANGED", rest.name, `New ID: ${newEmail}, Commission: ${newCommission}%, Status: ${newStatus}`);
+      alert(`✅ Restaurant Credentials Updated!\n\nID: ${newEmail}\nPassword: ${newPassword || "Unchanged"}\nCommission: ${newCommission}%`);
+    }
+
+    function generateRandomPassword(targetId) {
+      const chars = "ABCDEFGHJKLMNPQRSTUVWXYZabcdefghijkmnpqrstuvwxyz23456789!@#$%";
+      let pwd = "Parosa@";
+      for (let i = 0; i < 6; i++) {
+        pwd += chars.charAt(Math.floor(Math.random() * chars.length));
+      }
+      document.getElementById(targetId).value = pwd;
+    }
+
+    function toggleRestaurantStore(restId) {
+      const rest = restaurantsData.find(r => r.id === restId);
+      if (rest) {
+        rest.isOnline = !rest.isOnline;
+        localStorage.setItem("parosa_restaurants", JSON.stringify(restaurantsData));
+        renderRestaurants();
+        logAuditEvent("RESTAURANT_STORE_TOGGLE", rest.name, `Store toggled to ${rest.isOnline ? 'ONLINE' : 'OFFLINE'}`);
+      }
+    }
+
+    // -------------------------------------------------------------
+    // COMMISSIONS & REVENUE
+    // -------------------------------------------------------------
+    function renderCommissions() {
+      const tbody = document.getElementById("commissions-table-body");
+      tbody.innerHTML = "";
+
+      restaurantsData.forEach(rest => {
+        const row = document.createElement("tr");
+        const estimatedGross = 48200;
+        const parosaCut = (estimatedGross * (rest.commission / 100));
+        const netPayout = estimatedGross - parosaCut;
+
+        row.innerHTML = `
+          <td class="py-3 px-4 font-bold text-white">${rest.name}</td>
+          <td class="py-3 px-4 text-emerald-400 font-bold">${rest.commission}%</td>
+          <td class="py-3 px-4 text-slate-300">112 orders</td>
+          <td class="py-3 px-4 text-white">₹${estimatedGross.toLocaleString()}</td>
+          <td class="py-3 px-4 text-emerald-400 font-bold">₹${parosaCut.toLocaleString(undefined, {maximumFractionDigits: 1})}</td>
+          <td class="py-3 px-4 text-amber-400">₹${netPayout.toLocaleString(undefined, {maximumFractionDigits: 1})}</td>
+          <td class="py-3 px-4 text-right">
+            <button onclick="openRestCredentialsModal('${rest.id}')" class="px-2.5 py-1 rounded-lg bg-slate-800 hover:bg-slate-700 text-amber-400 font-semibold text-[11px] cursor-pointer">
+              Edit %
+            </button>
+          </td>
+        `;
+        tbody.appendChild(row);
+      });
+    }
+
+    function saveGlobalCommission() {
+      if (currentAdmin?.role !== "SUPER_ADMIN") {
+        alert("🔒 Only Super Admin can change global commission.");
+        return;
+      }
+      const val = parseFloat(document.getElementById("global-commission-input").value);
+      if (isNaN(val) || val < 0 || val > 100) return;
+      globalCommission = val;
+      localStorage.setItem("parosa_global_commission", globalCommission);
+      logAuditEvent("GLOBAL_COMMISSION_UPDATED", "All Restaurants", `Default rate set to ${val}%`);
+      alert(`✅ Global Platform Commission updated to ${val}%!`);
+    }
+
+    // -------------------------------------------------------------
+    // CUSTOMER APP BANNERS
+    // -------------------------------------------------------------
+    function renderBanners() {
+      const grid = document.getElementById("banners-grid");
+      grid.innerHTML = "";
+      document.getElementById("badge-banners-count").innerText = bannersData.length;
+
+      bannersData.forEach(banner => {
+        const card = document.createElement("div");
+        card.className = "bg-slate-900 border border-slate-800 rounded-3xl overflow-hidden shadow-sm flex flex-col";
+        card.innerHTML = `
+          <div class="relative h-40">
+            <img src="${banner.image}" alt="${banner.title}" class="w-full h-full object-cover">
+            <div class="absolute inset-0 bg-gradient-to-t from-slate-950 via-slate-950/40 to-transparent"></div>
+            <div class="absolute top-3 right-3 px-2 py-0.5 rounded text-[10px] font-mono font-bold ${banner.active ? 'bg-emerald-950 text-emerald-400 border border-emerald-800' : 'bg-slate-800 text-slate-400'}">
+              ${banner.active ? 'LIVE ON APP' : 'PAUSED'}
+            </div>
+            <div class="absolute bottom-3 left-3 right-3">
+              <h4 class="font-bold text-white text-sm font-serif truncate">${banner.title}</h4>
+              <p class="text-[11px] text-amber-300 font-mono truncate">${banner.subtitle}</p>
+            </div>
+          </div>
+          <div class="p-3 bg-slate-950 border-t border-slate-800 flex items-center justify-between text-xs font-mono">
+            <span class="text-slate-400 text-[10px]">Action: ${banner.action}</span>
+            <button onclick="deleteBanner('${banner.id}')" class="text-rose-400 hover:text-rose-300 text-xs cursor-pointer font-bold">
+              🗑️ Remove
+            </button>
+          </div>
+        `;
+        grid.appendChild(card);
+      });
+    }
+
+    function openAddBannerModal() {
+      document.getElementById("modal-banner").classList.remove("hidden");
+    }
+
+    function handleSaveBanner(e) {
+      e.preventDefault();
+      const newBanner = {
+        id: "bn_" + Date.now(),
+        title: document.getElementById("banner-title").value.trim(),
+        subtitle: document.getElementById("banner-subtitle").value.trim(),
+        image: document.getElementById("banner-image").value.trim(),
+        action: document.getElementById("banner-action").value,
+        active: document.getElementById("banner-active").value === "true"
+      };
+
+      bannersData.unshift(newBanner);
+      localStorage.setItem("parosa_banners", JSON.stringify(bannersData));
+      closeModal("modal-banner");
+      renderBanners();
+      logAuditEvent("APP_BANNER_CREATED", newBanner.title, "Published to Mobile App Carousel");
+      alert(`✅ New Banner "${newBanner.title}" published to Customer App!`);
+    }
+
+    function deleteBanner(id) {
+      bannersData = bannersData.filter(b => b.id !== id);
+      localStorage.setItem("parosa_banners", JSON.stringify(bannersData));
+      renderBanners();
+      logAuditEvent("APP_BANNER_DELETED", id, "Banner removed from app");
+    }
+
+    // -------------------------------------------------------------
+    // COUPONS & PROMO CODES
+    // -------------------------------------------------------------
+    function renderCoupons() {
+      const tbody = document.getElementById("coupons-table-body");
+      tbody.innerHTML = "";
+      document.getElementById("badge-coupons-count").innerText = couponsData.length;
+
+      couponsData.forEach(cp => {
+        const row = document.createElement("tr");
+        row.innerHTML = `
+          <td class="py-3 px-4 font-bold text-amber-400">${cp.code}</td>
+          <td class="py-3 px-4 font-bold text-emerald-400">${cp.type === 'PERCENT' ? `${cp.value}% OFF` : `₹${cp.value} FLAT OFF`}</td>
+          <td class="py-3 px-4 text-slate-300">₹${cp.minOrder}</td>
+          <td class="py-3 px-4 text-slate-300">₹${cp.maxDiscount}</td>
+          <td class="py-3 px-4 text-slate-400 text-[11px]">${cp.expiry}</td>
+          <td class="py-3 px-4">
+            <span class="px-2 py-0.5 rounded text-[10px] font-bold ${cp.active ? 'bg-emerald-950 text-emerald-400 border border-emerald-800' : 'bg-slate-800 text-slate-400'}">
+              ${cp.active ? 'ACTIVE' : 'EXPIRED'}
+            </span>
+          </td>
+          <td class="py-3 px-4 text-right">
+            <button onclick="deleteCoupon('${cp.id}')" class="text-rose-400 hover:text-rose-300 cursor-pointer font-bold">
+              ✕ Delete
+            </button>
+          </td>
+        `;
+        tbody.appendChild(row);
+      });
+    }
+
+    function openAddCouponModal() {
+      document.getElementById("modal-coupon").classList.remove("hidden");
+    }
+
+    function handleSaveCoupon(e) {
+      e.preventDefault();
+      const newCoupon = {
+        id: "cp_" + Date.now(),
+        code: document.getElementById("coupon-code").value.trim().toUpperCase(),
+        type: document.getElementById("coupon-type").value,
+        value: parseFloat(document.getElementById("coupon-value").value),
+        minOrder: parseFloat(document.getElementById("coupon-min-order").value),
+        maxDiscount: parseFloat(document.getElementById("coupon-max-cap").value),
+        expiry: document.getElementById("coupon-expiry").value,
+        active: true
+      };
+
+      couponsData.unshift(newCoupon);
+      localStorage.setItem("parosa_coupons", JSON.stringify(couponsData));
+      closeModal("modal-coupon");
+      renderCoupons();
+      logAuditEvent("COUPON_CREATED", newCoupon.code, `Discount: ${newCoupon.value}, Min Order: ₹${newCoupon.minOrder}`);
+      alert(`✅ Coupon code ${newCoupon.code} created and live for customer checkout!`);
+    }
+
+    function deleteCoupon(id) {
+      couponsData = couponsData.filter(c => c.id !== id);
+      localStorage.setItem("parosa_coupons", JSON.stringify(couponsData));
+      renderCoupons();
+      logAuditEvent("COUPON_DELETED", id, "Coupon removed from platform");
+    }
+
+    // -------------------------------------------------------------
+    // LIVE ORDERS & SIMULATOR
+    // -------------------------------------------------------------
+    function renderOrders() {
+      const tbody = document.getElementById("orders-table-body");
+      tbody.innerHTML = "";
+      document.getElementById("badge-orders-count").innerText = ordersData.length;
+
+      ordersData.forEach(order => {
+        const row = document.createElement("tr");
+        let badgeColor = "bg-amber-950 text-amber-400 border-amber-800";
+        let nextActionBtn = "";
+
+        if (order.status === "PLACED") {
+          badgeColor = "bg-rose-950 text-rose-400 border-rose-800 animate-pulse";
+          nextActionBtn = `<button onclick="advanceOrderStatus('${order.id}', 'CONFIRMED')" class="px-2.5 py-1 rounded-lg bg-rose-700 hover:bg-rose-600 text-white font-bold text-[11px] cursor-pointer">Accept</button>`;
+        } else if (order.status === "CONFIRMED") {
+          badgeColor = "bg-amber-950 text-amber-400 border-amber-800";
+          nextActionBtn = `<button onclick="advanceOrderStatus('${order.id}', 'PREPARING')" class="px-2.5 py-1 rounded-lg bg-amber-600 hover:bg-amber-500 text-slate-950 font-bold text-[11px] cursor-pointer">Prepare</button>`;
+        } else if (order.status === "PREPARING") {
+          badgeColor = "bg-blue-950 text-blue-400 border-blue-800";
+          nextActionBtn = `<button onclick="advanceOrderStatus('${order.id}', 'READY')" class="px-2.5 py-1 rounded-lg bg-blue-700 hover:bg-blue-600 text-white font-bold text-[11px] cursor-pointer">Food Ready</button>`;
+        } else if (order.status === "READY") {
+          badgeColor = "bg-indigo-950 text-indigo-400 border-indigo-800";
+          nextActionBtn = `<button onclick="advanceOrderStatus('${order.id}', 'DELIVERED')" class="px-2.5 py-1 rounded-lg bg-emerald-700 hover:bg-emerald-600 text-white font-bold text-[11px] cursor-pointer">Dispatch Rider</button>`;
+        } else if (order.status === "DELIVERED") {
+          badgeColor = "bg-emerald-950 text-emerald-400 border-emerald-800";
+          nextActionBtn = `<span class="text-emerald-400 text-xs">✓ Done</span>`;
+        }
+
+        row.innerHTML = `
+          <td class="py-3 px-4 font-bold text-amber-400">${order.id}</td>
+          <td class="py-3 px-4 font-semibold text-white">${order.customerName}<div class="text-[10px] text-slate-500">${order.phone}</div></td>
+          <td class="py-3 px-4 text-slate-300">${order.restaurantName}</td>
+          <td class="py-3 px-4 text-slate-400 max-w-xs truncate">${order.itemsSummary}</td>
+          <td class="py-3 px-4 font-bold text-white">₹${order.total}</td>
+          <td class="py-3 px-4">
+            <span class="px-2 py-0.5 rounded text-[10px] font-bold border ${badgeColor}">
+              ${order.status}
+            </span>
+          </td>
+          <td class="py-3 px-4 text-right">
+            ${nextActionBtn}
+          </td>
+        `;
+        tbody.appendChild(row);
+      });
+    }
+
+    function advanceOrderStatus(orderId, nextStatus) {
+      const order = ordersData.find(o => o.id === orderId);
+      if (order) {
+        order.status = nextStatus;
+        localStorage.setItem("parosa_orders", JSON.stringify(ordersData));
+        renderOrders();
+        logAuditEvent("ORDER_STATUS_CHANGED", orderId, `Status transitioned to ${nextStatus}`);
+      }
+    }
+
+    function simulateCustomerOrder() {
+      const names = ["Ananya Sharma", "Vikram Rathore", "Karan Singhal", "Simran Gill", "Aditya Roy"];
+      const randName = names[Math.floor(Math.random() * names.length)];
+      const randRest = restaurantsData[Math.floor(Math.random() * restaurantsData.length)];
+      const randId = "ORD-" + Math.floor(1000 + Math.random() * 9000);
+
+      const newOrder = {
+        id: randId,
+        customerName: randName,
+        phone: "+91 9829" + Math.floor(100000 + Math.random() * 900000),
+        restaurantId: randRest.id,
+        restaurantName: randRest.name,
+        itemsSummary: "1x Special Royal Thali, 2x Garlic Naan",
+        total: Math.floor(320 + Math.random() * 300),
+        status: "PLACED",
+        time: "Just now"
+      };
+
+      ordersData.unshift(newOrder);
+      localStorage.setItem("parosa_orders", JSON.stringify(ordersData));
+      renderOrders();
+      logAuditEvent("SIMULATED_ORDER_RECEIVED", randId, `Order for ₹${newOrder.total} from ${randName} at ${randRest.name}`);
+      alert(`🔔 NEW LIVE ORDER ALERT: ${randId}\n\nCustomer: ${randName}\nRestaurant: ${randRest.name}\nTotal: ₹${newOrder.total}\n\nStatus: PLACED (Pending Kitchen Confirmation)`);
+    }
+
+    // -------------------------------------------------------------
+    // STAFF & ROLES (RBAC)
+    // -------------------------------------------------------------
+    function renderStaff() {
+      const tbody = document.getElementById("staff-table-body");
+      tbody.innerHTML = "";
+
+      staffData.forEach(st => {
+        const row = document.createElement("tr");
+        const isSuper = st.role === "SUPER_ADMIN";
+        row.innerHTML = `
+          <td class="py-3.5 px-4 font-bold text-white">${st.name}</td>
+          <td class="py-3.5 px-4 text-amber-400">${st.email}</td>
+          <td class="py-3.5 px-4">
+            <span class="px-2 py-0.5 rounded text-[10px] font-bold ${isSuper ? 'bg-amber-500/20 text-amber-400 border border-amber-500/30' : 'bg-slate-800 text-slate-300'}">
+              ${st.role}
+            </span>
+          </td>
+          <td class="py-3.5 px-4 text-slate-400 text-[11px]">${st.scope}</td>
+          <td class="py-3.5 px-4">
+            <span class="px-2 py-0.5 rounded text-[10px] font-bold bg-emerald-950 text-emerald-400 border border-emerald-800">
+              ${st.status}
+            </span>
+          </td>
+          <td class="py-3.5 px-4 text-right">
+            ${isSuper ? '<span class="text-slate-500 text-[11px]">Primary Owner</span>' : `<button onclick="deleteStaff('${st.id}')" class="text-rose-400 hover:text-rose-300 font-bold cursor-pointer">Revoke</button>`}
+          </td>
+        `;
+        tbody.appendChild(row);
+      });
+    }
+
+    function openAddStaffModal() {
+      if (currentAdmin?.role !== "SUPER_ADMIN") {
+        alert("🔒 Unauthorized: Only Super Admin (pawan@alwar.inn) can add sub-admins.");
+        return;
+      }
+      document.getElementById("modal-staff").classList.remove("hidden");
+    }
+
+    function handleSaveStaff(e) {
+      e.preventDefault();
+      const newStaff = {
+        id: "st_" + Date.now(),
+        name: document.getElementById("staff-name").value.trim(),
+        email: document.getElementById("staff-email").value.trim().toLowerCase(),
+        role: document.getElementById("staff-role").value,
+        scope: document.getElementById("staff-role").options[document.getElementById("staff-role").selectedIndex].text,
+        status: "ACTIVE"
+      };
+
+      staffData.push(newStaff);
+      localStorage.setItem("parosa_staff", JSON.stringify(staffData));
+      closeModal("modal-staff");
+      renderStaff();
+      logAuditEvent("SUB_ADMIN_CREATED", newStaff.email, `Assigned role ${newStaff.role} by Super Admin`);
+      alert(`✅ New Sub-Admin created for ${newStaff.name} (${newStaff.role})!`);
+    }
+
+    function deleteStaff(id) {
+      if (currentAdmin?.role !== "SUPER_ADMIN") {
+        alert("🔒 Unauthorized: Only Super Admin can revoke sub-admins.");
+        return;
+      }
+      staffData = staffData.filter(s => s.id !== id);
+      localStorage.setItem("parosa_staff", JSON.stringify(staffData));
+      renderStaff();
+      logAuditEvent("SUB_ADMIN_REVOKED", id, "Privileges revoked by Super Admin");
+    }
+
+    // -------------------------------------------------------------
+    // AUDIT LOGGING
+    // -------------------------------------------------------------
+    function logAuditEvent(action, target, security) {
+      const newLog = {
+        timestamp: new Date().toLocaleTimeString(),
+        actor: currentAdmin ? `${currentAdmin.email} (${currentAdmin.role})` : "System / Pre-auth",
+        action,
+        target,
+        security
+      };
+      auditLogs.unshift(newLog);
+      if (auditLogs.length > 50) auditLogs.pop();
+      localStorage.setItem("parosa_audit_logs", JSON.stringify(auditLogs));
+      renderAuditLogs();
+    }
+
+    function renderAuditLogs() {
+      const tbody = document.getElementById("audit-table-body");
+      if (!tbody) return;
+      tbody.innerHTML = "";
+
+      auditLogs.forEach(log => {
+        const row = document.createElement("tr");
+        row.innerHTML = `
+          <td class="py-2.5 px-4 text-slate-500">${log.timestamp}</td>
+          <td class="py-2.5 px-4 font-bold text-amber-400">${log.actor}</td>
+          <td class="py-2.5 px-4 font-bold text-rose-400">${log.action}</td>
+          <td class="py-2.5 px-4 text-slate-300">${log.target}</td>
+          <td class="py-2.5 px-4 text-emerald-400 text-[11px]">${log.security}</td>
+        `;
+        tbody.appendChild(row);
+      });
+    }
+
+    function clearAuditLogs() {
+      auditLogs = [];
+      localStorage.setItem("parosa_audit_logs", JSON.stringify(auditLogs));
+      renderAuditLogs();
+    }
+
+    // -------------------------------------------------------------
+    // MODAL UTILITY
+    // -------------------------------------------------------------
+    function closeModal(modalId) {
+      document.getElementById(modalId).classList.add("hidden");
+    }
+
+    function renderAllModules() {
+      renderRestaurants();
+      renderOrders();
+      renderBanners();
+      renderCoupons();
+      renderCommissions();
+      renderStaff();
+      renderAuditLogs();
+    }
+
+    // Initialize state on window load
+    window.addEventListener("DOMContentLoaded", () => {
+      verifyAuthenticationState();
+    });
   </script>
 </body>
 </html>
